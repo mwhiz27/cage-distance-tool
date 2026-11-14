@@ -1,0 +1,1382 @@
+{
+ "USA": {
+  "gdp_pc": {
+   "value": 90026.5163005744,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 30769700000000.0,
+   "year": 2025
+  },
+  "internet": {
+   "value": 94.69380188,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.8,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 12.3577589988709,
+   "year": 2023
+  },
+  "voice": {
+   "value": 9.65270978212356,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 15.3310606479645,
+   "year": 2023
+  }
+ },
+ "CAN": {
+  "gdp_pc": {
+   "value": 55697.6639660837,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 2319899772425.92,
+   "year": 2025
+  },
+  "internet": {
+   "value": 94.353302,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 18.3865114450455,
+   "year": 2023
+  },
+  "voice": {
+   "value": 16.2761082649231,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 18.0918146371841,
+   "year": 2023
+  }
+ },
+ "MEX": {
+  "gdp_pc": {
+   "value": 13889.2339628708,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1832641364775.52,
+   "year": 2025
+  },
+  "internet": {
+   "value": 83.12233799,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.9,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -11.2263661623001,
+   "year": 2023
+  },
+  "voice": {
+   "value": -1.26594670116902,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -1.8918713927269,
+   "year": 2023
+  }
+ },
+ "BRA": {
+  "gdp_pc": {
+   "value": 10713.2856869511,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 2279920092492.13,
+   "year": 2025
+  },
+  "internet": {
+   "value": 84.46347227,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.2,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -5.54007470607757,
+   "year": 2023
+  },
+  "voice": {
+   "value": 4.21139252185821,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -3.26126033067703,
+   "year": 2023
+  }
+ },
+ "ARG": {
+  "gdp_pc": {
+   "value": 14898.0885943842,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 683097891618.597,
+   "year": 2025
+  },
+  "internet": {
+   "value": 89.66715228,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.8,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -3.96972346305847,
+   "year": 2023
+  },
+  "voice": {
+   "value": 5.87314021587372,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -5.30788931250572,
+   "year": 2023
+  }
+ },
+ "CHL": {
+  "gdp_pc": {
+   "value": 17994.5911957485,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 357371159574.862,
+   "year": 2025
+  },
+  "internet": {
+   "value": 95.590243,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 10.65464168787,
+   "year": 2023
+  },
+  "voice": {
+   "value": 11.1974414587021,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 10.1830489039421,
+   "year": 2023
+  }
+ },
+ "COL": {
+  "gdp_pc": {
+   "value": 8561.62091854449,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 457410034202.523,
+   "year": 2025
+  },
+  "internet": {
+   "value": 79.34543299,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.9,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -3.4011041522026,
+   "year": 2023
+  },
+  "voice": {
+   "value": 2.25735114514828,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 1.11137695610523,
+   "year": 2023
+  }
+ },
+ "PER": {
+  "gdp_pc": {
+   "value": 9684.41170314988,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 334854659181.893,
+   "year": 2025
+  },
+  "internet": {
+   "value": 81.95705992,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -7.93144994974136,
+   "year": 2023
+  },
+  "voice": {
+   "value": 0.665296457707882,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 3.21425703167915,
+   "year": 2023
+  }
+ },
+ "GBR": {
+  "gdp_pc": {
+   "value": 57601.9621201954,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 4002587541846.01,
+   "year": 2025
+  },
+  "internet": {
+   "value": 95.4720993,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 16.290052652359,
+   "year": 2023
+  },
+  "voice": {
+   "value": 13.8778637647629,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 16.9022340774536,
+   "year": 2023
+  }
+ },
+ "IRL": {
+  "gdp_pc": {
+   "value": 131592.462547877,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 721701359046.313,
+   "year": 2025
+  },
+  "internet": {
+   "value": 97.18769836,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 17.3281778097153,
+   "year": 2023
+  },
+  "voice": {
+   "value": 16.3180161714553,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 19.2430028915406,
+   "year": 2023
+  }
+ },
+ "FRA": {
+  "gdp_pc": {
+   "value": 48985.7307807924,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 3366315927447.33,
+   "year": 2025
+  },
+  "internet": {
+   "value": 88.65381638,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.9,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 13.0330402851105,
+   "year": 2023
+  },
+  "voice": {
+   "value": 12.7006146907806,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 12.6885598897934,
+   "year": 2023
+  }
+ },
+ "DEU": {
+  "gdp_pc": {
+   "value": 60496.4350820414,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 5050922925047.05,
+   "year": 2025
+  },
+  "internet": {
+   "value": 93.49999579,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.1,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 18.305828332901,
+   "year": 2023
+  },
+  "voice": {
+   "value": 16.0752429962158,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 16.0267248153686,
+   "year": 2023
+  }
+ },
+ "ESP": {
+  "gdp_pc": {
+   "value": 38627.2472148623,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1906453309985.88,
+   "year": 2025
+  },
+  "internet": {
+   "value": 95.7574516,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.9,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 6.92305594682693,
+   "year": 2023
+  },
+  "voice": {
+   "value": 13.1420265436173,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 7.63140761852264,
+   "year": 2023
+  }
+ },
+ "ITA": {
+  "gdp_pc": {
+   "value": 43308.6403060733,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 2551556954100.35,
+   "year": 2025
+  },
+  "internet": {
+   "value": 89.2207202,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 6.05142092704773,
+   "year": 2023
+  },
+  "voice": {
+   "value": 12.2708393335342,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 7.0843493938446,
+   "year": 2023
+  }
+ },
+ "NLD": {
+  "gdp_pc": {
+   "value": 73683.917132794,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1332767651100.39,
+   "year": 2025
+  },
+  "internet": {
+   "value": 97.00679779,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.1,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 20.5381052494049,
+   "year": 2023
+  },
+  "voice": {
+   "value": 17.118908405304,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 19.7006303071976,
+   "year": 2023
+  }
+ },
+ "BEL": {
+  "gdp_pc": {
+   "value": 60750.2735864647,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 725466462859.646,
+   "year": 2025
+  },
+  "internet": {
+   "value": 95.77579144,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 14.7052888870239,
+   "year": 2023
+  },
+  "voice": {
+   "value": 14.5830191373825,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 12.8504729270936,
+   "year": 2023
+  }
+ },
+ "AUT": {
+  "gdp_pc": {
+   "value": 62930.0351324599,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 579470021095.418,
+   "year": 2025
+  },
+  "internet": {
+   "value": 91.92573373,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 4.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 12.4701861143112,
+   "year": 2023
+  },
+  "voice": {
+   "value": 15.5237315893173,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 14.9750670194625,
+   "year": 2023
+  }
+ },
+ "CHE": {
+  "gdp_pc": {
+   "value": 114769.012314293,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1043529899250.92,
+   "year": 2025
+  },
+  "internet": {
+   "value": 97.32103855,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 4.1,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 22.2419903278351,
+   "year": 2023
+  },
+  "voice": {
+   "value": 18.3152959346772,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 19.0231801271438,
+   "year": 2023
+  }
+ },
+ "SWE": {
+  "gdp_pc": {
+   "value": 63133.2126736715,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 668998664082.081,
+   "year": 2025
+  },
+  "internet": {
+   "value": 95.76629783,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 4.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 22.3107078075409,
+   "year": 2023
+  },
+  "voice": {
+   "value": 17.3231476545334,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 18.8981881141662,
+   "year": 2023
+  }
+ },
+ "NOR": {
+  "gdp_pc": {
+   "value": 94594.1929573987,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 530755719438.879,
+   "year": 2025
+  },
+  "internet": {
+   "value": 99.0,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 23.248737335205,
+   "year": 2023
+  },
+  "voice": {
+   "value": 19.5497977733612,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 17.5727579593658,
+   "year": 2023
+  }
+ },
+ "DNK": {
+  "gdp_pc": {
+   "value": 76970.1535217919,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 462526660468.393,
+   "year": 2025
+  },
+  "internet": {
+   "value": 99.76915157,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.1,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 26.1365840435028,
+   "year": 2023
+  },
+  "voice": {
+   "value": 18.3116924762726,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 20.2347184419632,
+   "year": 2023
+  }
+ },
+ "POL": {
+  "gdp_pc": {
+   "value": 28419.5777395638,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1035491784197.44,
+   "year": 2025
+  },
+  "internet": {
+   "value": 88.58496367,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 6.21939939260483,
+   "year": 2023
+  },
+  "voice": {
+   "value": 6.89095985889435,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 8.58212924003601,
+   "year": 2023
+  }
+ },
+ "PRT": {
+  "gdp_pc": {
+   "value": 32081.8106150292,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 346639825141.821,
+   "year": 2025
+  },
+  "internet": {
+   "value": 88.48704454,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.4,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 7.65943276882171,
+   "year": 2023
+  },
+  "voice": {
+   "value": 13.3241126537323,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 8.30892205238342,
+   "year": 2023
+  }
+ },
+ "RUS": {
+  "gdp_pc": {
+   "value": 17546.609375,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 2561310169358.74,
+   "year": 2025
+  },
+  "internet": {
+   "value": 94.36495368,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -12.1514610052109,
+   "year": 2023
+  },
+  "voice": {
+   "value": -14.1409358978272,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -12.3427904844284,
+   "year": 2023
+  }
+ },
+ "TUR": {
+  "gdp_pc": {
+   "value": 18599.4420922378,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1597293229287.0,
+   "year": 2025
+  },
+  "internet": {
+   "value": 89.77024003,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 3.4,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -5.52737998962402,
+   "year": 2023
+  },
+  "voice": {
+   "value": -9.46634685993195,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -2.52461239695549,
+   "year": 2023
+  }
+ },
+ "SAU": {
+  "gdp_pc": {
+   "value": 34536.6555456551,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1276942933333.33,
+   "year": 2025
+  },
+  "internet": {
+   "value": 100.0,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.4,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 5.89647287130355,
+   "year": 2023
+  },
+  "voice": {
+   "value": -15.5836174488068,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 5.68777978420257,
+   "year": 2023
+  }
+ },
+ "ARE": {
+  "gdp_pc": {
+   "value": 50273.5126243239,
+   "year": 2024
+  },
+  "gdp": {
+   "value": 552324919095.872,
+   "year": 2024
+  },
+  "internet": {
+   "value": 100.0,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 11.8103021383285,
+   "year": 2023
+  },
+  "voice": {
+   "value": -12.0443512201309,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 11.4663056135178,
+   "year": 2023
+  }
+ },
+ "QAT": {
+  "gdp_pc": {
+   "value": 72524.9066385222,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 215559615384.615,
+   "year": 2025
+  },
+  "internet": {
+   "value": 98.08540344,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.5,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 7.72430813312531,
+   "year": 2023
+  },
+  "voice": {
+   "value": -10.6766014099121,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 10.7474497556686,
+   "year": 2023
+  }
+ },
+ "EGY": {
+  "gdp_pc": {
+   "value": 3085.80712036204,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 365254630179.737,
+   "year": 2025
+  },
+  "internet": {
+   "value": 74.64839935,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.1,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -8.22569435834884,
+   "year": 2023
+  },
+  "voice": {
+   "value": -15.1732873916626,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -7.32001924514771,
+   "year": 2023
+  }
+ },
+ "MAR": {
+  "gdp_pc": {
+   "value": 4672.46826171875,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 182374250612.28,
+   "year": 2025
+  },
+  "internet": {
+   "value": 91.2,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.54,
+   "year": 2018
+  },
+  "corruption": {
+   "value": -5.89983439445496,
+   "year": 2023
+  },
+  "voice": {
+   "value": -5.38186085224151,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -0.706287927925587,
+   "year": 2023
+  }
+ },
+ "ISR": {
+  "gdp_pc": {
+   "value": 60336.8477964194,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 610777842873.595,
+   "year": 2025
+  },
+  "internet": {
+   "value": 88.18242225,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 9.12295353412628,
+   "year": 2023
+  },
+  "voice": {
+   "value": 7.08691102266312,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 12.3397771120072,
+   "year": 2023
+  }
+ },
+ "ZAF": {
+  "gdp_pc": {
+   "value": 6597.71450918774,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 427184325997.307,
+   "year": 2025
+  },
+  "internet": {
+   "value": 78.35759735,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -3.13137486577034,
+   "year": 2023
+  },
+  "voice": {
+   "value": 8.1938139796257,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -2.46067740023136,
+   "year": 2023
+  }
+ },
+ "NGA": {
+  "gdp_pc": {
+   "value": 1224.25410237743,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 290794361542.112,
+   "year": 2025
+  },
+  "internet": {
+   "value": 41.21139908,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -11.450718164444,
+   "year": 2023
+  },
+  "voice": {
+   "value": -6.03084003925324,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -10.3055166602135,
+   "year": 2023
+  }
+ },
+ "KEN": {
+  "gdp_pc": {
+   "value": 2362.86091198611,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 135941278878.815,
+   "year": 2025
+  },
+  "internet": {
+   "value": 34.97622513,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 2.81,
+   "year": 2018
+  },
+  "corruption": {
+   "value": -8.48004305362701,
+   "year": 2023
+  },
+  "voice": {
+   "value": -1.36587751656771,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -4.29887244105339,
+   "year": 2023
+  }
+ },
+ "IND": {
+  "gdp_pc": {
+   "value": 2702.47987141553,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 3956067115771.63,
+   "year": 2025
+  },
+  "internet": {
+   "value": 70.0,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 3.4,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -4.02616223692894,
+   "year": 2023
+  },
+  "voice": {
+   "value": 1.03844937682152,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -1.50666539371014,
+   "year": 2023
+  }
+ },
+ "CHN": {
+  "gdp_pc": {
+   "value": 13861.970224368,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 19498039388042.6,
+   "year": 2025
+  },
+  "internet": {
+   "value": 91.6,
+   "year": 2025
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -0.0590711515396833,
+   "year": 2023
+  },
+  "voice": {
+   "value": -16.5500956773758,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -3.92158588767052,
+   "year": 2023
+  }
+ },
+ "JPN": {
+  "gdp_pc": {
+   "value": 35951.0449549304,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 4435162999976.94,
+   "year": 2025
+  },
+  "internet": {
+   "value": 85.54153081,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.9,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 15.3522670269012,
+   "year": 2023
+  },
+  "voice": {
+   "value": 12.1605588197708,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 16.162584900856,
+   "year": 2023
+  }
+ },
+ "KOR": {
+  "gdp_pc": {
+   "value": 36226.9663637512,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1872374961553.15,
+   "year": 2025
+  },
+  "internet": {
+   "value": 97.89563777,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.8,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 9.83497422933578,
+   "year": 2023
+  },
+  "voice": {
+   "value": 9.4555469751358,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 12.347755074501,
+   "year": 2023
+  }
+ },
+ "SGP": {
+  "gdp_pc": {
+   "value": 98813.9788172877,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 603869516998.738,
+   "year": 2025
+  },
+  "internet": {
+   "value": 94.37757178,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 4.3,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 22.442024230957,
+   "year": 2023
+  },
+  "voice": {
+   "value": -0.719531260430813,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 25.3945050239563,
+   "year": 2023
+  }
+ },
+ "IDN": {
+  "gdp_pc": {
+   "value": 5059.62596411213,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1445642584163.81,
+   "year": 2025
+  },
+  "internet": {
+   "value": 72.78075544,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.0,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -5.35559415817261,
+   "year": 2023
+  },
+  "voice": {
+   "value": 1.52881099283695,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 3.31516632437706,
+   "year": 2023
+  }
+ },
+ "VNM": {
+  "gdp_pc": {
+   "value": 5065.99091899299,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 514697215165.065,
+   "year": 2025
+  },
+  "internet": {
+   "value": 84.15,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.3,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -4.57395708560944,
+   "year": 2023
+  },
+  "voice": {
+   "value": -13.6603908538819,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": -4.20868501067161,
+   "year": 2023
+  }
+ },
+ "THA": {
+  "gdp_pc": {
+   "value": 8056.56359761558,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 577009981112.015,
+   "year": 2025
+  },
+  "internet": {
+   "value": 90.86718789,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.5,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -5.3795585334301,
+   "year": 2023
+  },
+  "voice": {
+   "value": -4.95408490300178,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 1.74083560705185,
+   "year": 2023
+  }
+ },
+ "PHL": {
+  "gdp_pc": {
+   "value": 4170.72347271451,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 487086123720.417,
+   "year": 2025
+  },
+  "internet": {
+   "value": 67.26300914,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.3,
+   "year": 2022
+  },
+  "corruption": {
+   "value": -5.9140397310257,
+   "year": 2023
+  },
+  "voice": {
+   "value": -0.185217704623938,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 1.80680459737778,
+   "year": 2023
+  }
+ },
+ "MYS": {
+  "gdp_pc": {
+   "value": 13124.5554178269,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 472193128644.597,
+   "year": 2025
+  },
+  "internet": {
+   "value": 98.0206059,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 3.25183501839638,
+   "year": 2023
+  },
+  "voice": {
+   "value": 0.963813498616219,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 7.2698370218277,
+   "year": 2023
+  }
+ },
+ "AUS": {
+  "gdp_pc": {
+   "value": 65129.7227990563,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 1798518933689.21,
+   "year": 2025
+  },
+  "internet": {
+   "value": 96.13140106,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.7,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 19.5932543277741,
+   "year": 2023
+  },
+  "voice": {
+   "value": 16.5726212263107,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 21.3642610311508,
+   "year": 2023
+  }
+ },
+ "NZL": {
+  "gdp_pc": {
+   "value": 49591.0405731713,
+   "year": 2025
+  },
+  "gdp": {
+   "value": 264057413739.965,
+   "year": 2025
+  },
+  "internet": {
+   "value": 93.51930237,
+   "year": 2024
+  },
+  "lpi": {
+   "value": 3.6,
+   "year": 2022
+  },
+  "corruption": {
+   "value": 22.9250502586365,
+   "year": 2023
+  },
+  "voice": {
+   "value": 18.565618276596,
+   "year": 2023
+  },
+  "reg_quality": {
+   "value": 21.012512087822,
+   "year": 2023
+  }
+ }
+}

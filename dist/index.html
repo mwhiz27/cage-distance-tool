@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CAGE Distance Analyzer</title>
+<meta name="description" content="Ghemawat CAGE distance between any two of 46 countries, scored per dimension with industry-specific weights, cited country-level evidence and weight sensitivity.">
+<style>
+:root{
+  --bg:#f7f6f2; --panel:#ffffff; --ink:#1d1f23; --muted:#5d6470; --line:#e2e0d8; --soft:#f0eee7;
+  --accent:#1f5f8b; --C:#7a4fb5; --A:#b5562b; --G:#2f7d5a; --E:#a07a12;
+  --low:#2f7d5a; --mod:#a07a12; --sig:#c0661f; --high:#b03030;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15171a; --panel:#1d2024; --ink:#e8e6e1; --muted:#a3a8b1; --line:#30343a; --soft:#25292e;
+    --accent:#6fb0de; --C:#ad8ae0; --A:#e08a60; --G:#62c095; --E:#d6b04a;
+    --low:#62c095; --mod:#d6b04a; --sig:#e6914c; --high:#ec6d6d;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15171a; --panel:#1d2024; --ink:#e8e6e1; --muted:#a3a8b1; --line:#30343a; --soft:#25292e;
+  --accent:#6fb0de; --C:#ad8ae0; --A:#e08a60; --G:#62c095; --E:#d6b04a;
+  --low:#62c095; --mod:#d6b04a; --sig:#e6914c; --high:#ec6d6d;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:1080px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:26px;margin:0 0 4px;letter-spacing:-.01em}
+h2{font-size:19px;margin:36px 0 12px;padding-bottom:6px;border-bottom:1px solid var(--line)}
+h3{font-size:16px;margin:0}
+p{margin:6px 0}
+a{color:var(--accent)}
+.sub{color:var(--muted);margin:0 0 18px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px}
+.controls{display:grid;grid-template-columns:1fr 1fr 2fr auto;gap:12px;align-items:end}
+label{display:block;font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px}
+select,button{font:inherit;color:var(--ink);background:var(--soft);border:1px solid var(--line);border-radius:7px;padding:8px 10px;width:100%}
+button{cursor:pointer;width:auto;white-space:nowrap}
+button:hover{border-color:var(--accent)}
+.verdict{display:grid;grid-template-columns:200px 1fr;gap:20px;margin-top:16px}
+.big{font-size:52px;font-weight:700;line-height:1}
+.band{display:inline-block;font-weight:700;padding:3px 10px;border-radius:999px;color:#fff;font-size:13px;margin-top:8px}
+.muted{color:var(--muted)}
+.small{font-size:13px}
+.dimbar{display:grid;grid-template-columns:120px 1fr 52px;gap:10px;align-items:center;margin:6px 0;font-size:14px}
+.track{height:12px;background:var(--soft);border-radius:6px;overflow:hidden}
+.fill{height:100%;border-radius:6px}
+.risk{border-left:4px solid var(--high);padding:8px 12px;background:var(--soft);border-radius:0 8px 8px 0;margin-top:10px}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.card{border-top:4px solid var(--line)}
+.card .head{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.score{font-size:28px;font-weight:700}
+table{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}
+th,td{text-align:left;padding:5px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:600;font-size:12px}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+.why{font-size:13px;background:var(--soft);padding:8px 10px;border-radius:7px;margin:8px 0}
+.src{font-size:12px;color:var(--muted);margin:6px 0 0;padding-left:18px}
+.note{font-size:13px;margin:6px 0;padding-left:10px;border-left:2px solid var(--line)}
+.sliders{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+input[type=range]{width:100%}
+.pill{display:inline-block;padding:1px 8px;border-radius:999px;font-size:12px;font-weight:600;color:#fff}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.chg{font-weight:700}
+footer{margin-top:40px;font-size:12px;color:var(--muted)}
+@media (max-width:760px){
+  .controls,.verdict,.cards,.grid2{grid-template-columns:1fr}
+  .sliders{grid-template-columns:1fr 1fr}
+  .tablewrap{overflow-x:auto}
+}
+@media print{
+  body{background:#fff;color:#000;font-size:11px}
+  .noprint{display:none!important}
+  .panel{border:1px solid #ccc;break-inside:avoid}
+  main{padding:0}
+  h2{break-after:avoid}
+}
+</style>
+</head>
+<body>
+<main>
+  <h1>CAGE Distance Analyzer</h1>
+  <p class="sub">Ghemawat's four distances (Cultural, Administrative, Geographic, Economic) between two countries, weighted for an industry. Every score is built from cited country-level data. Change the inputs below and the page recalculates.</p>
+
+  <div class="panel controls">
+    <div><label for="home">Home country</label><select id="home"></select></div>
+    <div><label for="target">Target country</label><select id="target"></select></div>
+    <div><label for="industry">Industry</label><select id="industry"></select></div>
+    <div class="noprint"><button id="print">Print / save PDF</button></div>
+  </div>
+
+  <section id="verdict"></section>
+
+  <h2>1 · The four dimensions</h2>
+  <p class="muted small">Each dimension is scored 0 (no distance) to 10 (extreme distance) from weighted sub-factors. Continuous measures are scored by percentile rank among all 2,070 ordered country pairs in the tool, so 8.0 means more distant than 80% of pairs. Categorical measures use the fixed rules shown in the Method section.</p>
+  <div class="cards" id="cards"></div>
+
+  <h2>2 · Weighting</h2>
+  <div class="panel">
+    <div id="weightwhy"></div>
+    <div class="noprint" style="margin-top:14px">
+      <label>Try your own weights (normalized to 100)</label>
+      <div class="sliders" id="sliders"></div>
+      <p style="margin-top:8px"><button id="reset">Reset to industry weights</button> <span class="muted small" id="wnote"></span></p>
+    </div>
+  </div>
+
+  <h2>3 · Sensitivity: what if the weights shift?</h2>
+  <p class="muted small">The dimension scores stay fixed (they are facts about the country pair). Only the weights move.</p>
+  <div class="grid2">
+    <div class="panel"><h3>Shift one weight ±10 / ±20 points</h3><p class="muted small">The other three weights are rescaled proportionally so the total stays 100.</p><div class="tablewrap" id="oat"></div></div>
+    <div class="panel"><h3>Where the recommendation flips</h3><p class="muted small">How far each weight can move, alone, before the distance band or the top caution changes.</p><div class="tablewrap" id="tip"></div></div>
+  </div>
+  <div class="panel" style="margin-top:14px"><h3>Other industries' weight sets applied to this pair</h3><p class="muted small">Same pair and the same dimension scores as above, with each preset's weights swapped in.</p><div class="tablewrap" id="presets"></div></div>
+
+  <h2>4 · Method &amp; limits</h2>
+  <div class="panel small" id="method"></div>
+
+  <h2>5 · Sources</h2>
+  <div class="panel small"><ol id="sources" style="margin:0;padding-left:20px"></ol></div>
+
+  <footer>Built for a BYU strategy course assignment. Data pulled November 2026. Country-level facts only: the tool does not know anything about a specific firm.</footer>
+</main>
+
+<script>
+const DATA = {"countries":{"USA":{"name":"United States","capital":"Washington, D.C.","lat":38.9,"lon":-77.04,"utc":-5.0,"lang":["English"],"lang2":["Spanish"],"religion":"Christian","legal":"common","hof":"USA","hof_fallback":null,"hofstede":{"pdi":40.0,"idv":91.0,"mas":62.0,"uai":46.0,"ltowvs":26.0,"ivr":68.0},"hofstede_label":"U.S.A.","hofstede_cluster":null,"wb":{"gdp_pc":{"value":90026.5163005744,"year":2025},"gdp":{"value":30769700000000.0,"year":2025},"internet":{"value":94.69380188,"year":2024},"lpi":{"value":3.8,"year":2022},"corruption":{"value":12.3577589988709,"year":2023},"voice":{"value":9.65270978212356,"year":2023},"reg_quality":{"value":15.3310606479645,"year":2023}}},"CAN":{"name":"Canada","capital":"Ottawa","lat":45.42,"lon":-75.7,"utc":-5.0,"lang":["English","French"],"lang2":[],"religion":"Christian","legal":"common","hof":"CAN","hof_fallback":null,"hofstede":{"pdi":39.0,"idv":80.0,"mas":52.0,"uai":48.0,"ltowvs":36.0,"ivr":68.0},"hofstede_label":"Canada","hofstede_cluster":null,"wb":{"gdp_pc":{"value":55697.6639660837,"year":2025},"gdp":{"value":2319899772425.92,"year":2025},"internet":{"value":94.353302,"year":2024},"lpi":{"value":4.0,"year":2022},"corruption":{"value":18.3865114450455,"year":2023},"voice":{"value":16.2761082649231,"year":2023},"reg_quality":{"value":18.0918146371841,"year":2023}}},"MEX":{"name":"Mexico","capital":"Mexico City","lat":19.43,"lon":-99.13,"utc":-6.0,"lang":["Spanish"],"lang2":[],"religion":"Christian","legal":"civil","hof":"MEX","hof_fallback":null,"hofstede":{"pdi":81.0,"idv":30.0,"mas":69.0,"uai":82.0,"ltowvs":24.0,"ivr":97.0},"hofstede_label":"Mexico","hofstede_cluster":null,"wb":{"gdp_pc":{"value":13889.2339628708,"year":2025},"gdp":{"value":1832641364775.52,"year":2025},"internet":{"value":83.12233799,"year":2024},"lpi":{"value":2.9,"year":2022},"corruption":{"value":-11.2263661623001,"year":2023},"voice":{"value":-1.26594670116902,"year":2023},"reg_quality":{"value":-1.8918713927269,"year":2023}}},"BRA":{"name":"Brazil","capital":"Brasília","lat":-15.79,"lon":-47.88,"utc":-3.0,"lang":["Portuguese"],"lang2":[],"religion":"Christian","legal":"civil","hof":"BRA","hof_fallback":null,"hofstede":{"pdi":69.0,"idv":38.0,"mas":49.0,"uai":76.0,"ltowvs":44.0,"ivr":59.0},"hofstede_label":"Brazil","hofstede_cluster":null,"wb":{"gdp_pc":{"value":10713.2856869511,"year":2025},"gdp":{"value":2279920092492.13,"year":2025},"internet":{"value":84.46347227,"year":2024},"lpi":{"value":3.2,"year":2022},"corruption":{"value":-5.54007470607757,"year":2023},"voice":{"value":4.21139252185821,"year":2023},"reg_quality":{"value":-3.26126033067703,"year":2023}}},"ARG":{"name":"Argentina","capital":"Buenos Aires","lat":-34.6,"lon":-58.38,"utc":-3.0,"lang":["Spanish"],"lang2":[],"religion":"Christian","legal":"civil","hof":"ARG","hof_fallback":null,"hofstede":{"pdi":49.0,"idv":46.0,"mas":56.0,"uai":86.0,"ltowvs":20.0,"ivr":62.0},"hofstede_label":"Argentina","hofstede_cluster":null,"wb":{"gdp_pc":{"value":14898.0885943842,"year":2025},"gdp":{"value":683097891618.597,"year":2025},"internet":{"value":89.66715228,"year":2024},"lpi":{"value":2.8,"year":2022},"corruption":{"value":-3.96972346305847,"year":2023},"voice":{"value":5.87314021587372,"year":2023},"reg_quality":{"value":-5.30788931250572,"year":2023}}},"CHL":{"name":"Chile","capital":"Santiago","lat":-33.45,"lon":-70.67,"utc":-4.0,"lang":["Spanish"],"lang2":[],"religion":"Christian","legal":"civil","hof":"CHL","hof_fallback":null,"hofstede":{"pdi":63.0,"idv":23.0,"mas":28.0,"uai":86.0,"ltowvs":31.0,"ivr":68.0},"hofstede_label":"Chile","hofstede_cluster":null,"wb":{"gdp_pc":{"value":17994.5911957485,"year":2025},"gdp":{"value":357371159574.862,"year":2025},"internet":{"value":95.590243,"year":2024},"lpi":{"value":3.0,"year":2022},"corruption":{"value":10.65464168787,"year":2023},"voice":{"value":11.1974414587021,"year":2023},"reg_quality":{"value":10.1830489039421,"year":2023}}},"COL":{"name":"Colombia","capital":"Bogotá","lat":4.71,"lon":-74.07,"utc":-5.0,"lang":["Spanish"],"lang2":[],"religion":"Christian","legal":"civil","hof":"COL","hof_fallback":null,"hofstede":{"pdi":67.0,"idv":13.0,"mas":64.0,"uai":80.0,"ltowvs":13.0,"ivr":83.0},"hofstede_label":"Colombia","hofstede_cluster":null,"wb":{"gdp_pc":{"value":8561.62091854449,"year":2025},"gdp":{"value":457410034202.523,"year":2025},"internet":{"value":79.34543299,"year":2024},"lpi":{"value":2.9,"year":2022},"corruption":{"value":-3.4011041522026,"year":2023},"voice":{"value":2.25735114514828,"year":2023},"reg_quality":{"value":1.11137695610523,"year":2023}}},"PER":{"name":"Peru","capital":"Lima","lat":-12.05,"lon":-77.04,"utc":-5.0,"lang":["Spanish"],"lang2":["Quechua"],"religion":"Christian","legal":"civil","hof":"PER","hof_fallback":null,"hofstede":{"pdi":64.0,"idv":16.0,"mas":42.0,"uai":87.0,"ltowvs":25.0,"ivr":46.0},"hofstede_label":"Peru","hofstede_cluster":null,"wb":{"gdp_pc":{"value":9684.41170314988,"year":2025},"gdp":{"value":334854659181.893,"year":2025},"internet":{"value":81.95705992,"year":2024},"lpi":{"value":3.0,"year":2022},"corruption":{"value":-7.93144994974136,"year":2023},"voice":{"value":0.665296457707882,"year":2023},"reg_quality":{"value":3.21425703167915,"year":2023}}},"GBR":{"name":"United Kingdom","capital":"London","lat":51.51,"lon":-0.13,"utc":0.0,"lang":["English"],"lang2":[],"religion":"Christian","legal":"common","hof":"GBR","hof_fallback":null,"hofstede":{"pdi":35.0,"idv":89.0,"mas":66.0,"uai":35.0,"ltowvs":51.0,"ivr":69.0},"hofstede_label":"Great Britain","hofstede_cluster":null,"wb":{"gdp_pc":{"value":57601.9621201954,"year":2025},"gdp":{"value":4002587541846.01,"year":2025},"internet":{"value":95.4720993,"year":2024},"lpi":{"value":3.7,"year":2022},"corruption":{"value":16.290052652359,"year":2023},"voice":{"value":13.8778637647629,"year":2023},"reg_quality":{"value":16.9022340774536,"year":2023}}},"IRL":{"name":"Ireland","capital":"Dublin","lat":53.35,"lon":-6.26,"utc":0.0,"lang":["English"],"lang2":["Irish"],"religion":"Christian","legal":"common","hof":"IRE","hof_fallback":null,"hofstede":{"pdi":28.0,"idv":70.0,"mas":68.0,"uai":35.0,"ltowvs":24.0,"ivr":65.0},"hofstede_label":"Ireland","hofstede_cluster":null,"wb":{"gdp_pc":{"value":131592.462547877,"year":2025},"gdp":{"value":721701359046.313,"year":2025},"internet":{"value":97.18769836,"year":2024},"lpi":{"value":3.6,"year":2022},"corruption":{"value":17.3281778097153,"year":2023},"voice":{"value":16.3180161714553,"year":2023},"reg_quality":{"value":19.2430028915406,"year":2023}}},"FRA":{"name":"France","capital":"Paris","lat":48.86,"lon":2.35,"utc":1.0,"lang":["French"],"lang2":[],"religion":"Christian","legal":"civil","hof":"FRA","hof_fallback":null,"hofstede":{"pdi":68.0,"idv":71.0,"mas":43.0,"uai":86.0,"ltowvs":63.0,"ivr":48.0},"hofstede_label":"France","hofstede_cluster":null,"wb":{"gdp_pc":{"value":48985.7307807924,"year":2025},"gdp":{"value":3366315927447.33,"year":2025},"internet":{"value":88.65381638,"year":2024},"lpi":{"value":3.9,"year":2022},"corruption":{"value":13.0330402851105,"year":2023},"voice":{"value":12.7006146907806,"year":2023},"reg_quality":{"value":12.6885598897934,"year":2023}}},"DEU":{"name":"Germany","capital":"Berlin","lat":52.52,"lon":13.4,"utc":1.0,"lang":["German"],"lang2":["English"],"religion":"Christian","legal":"civil","hof":"GER","hof_fallback":null,"hofstede":{"pdi":35.0,"idv":67.0,"mas":66.0,"uai":65.0,"ltowvs":83.0,"ivr":40.0},"hofstede_label":"Germany","hofstede_cluster":null,"wb":{"gdp_pc":{"value":60496.4350820414,"year":2025},"gdp":{"value":5050922925047.05,"year":2025},"internet":{"value":93.49999579,"year":2024},"lpi":{"value":4.1,"year":2022},"corruption":{"value":18.305828332901,"year":2023},"voice":{"value":16.0752429962158,"year":2023},"reg_quality":{"value":16.0267248153686,"year":2023}}},"ESP":{"name":"Spain","capital":"Madrid","lat":40.42,"lon":-3.7,"utc":1.0,"lang":["Spanish"],"lang2":["Catalan"],"religion":"Christian","legal":"civil","hof":"SPA","hof_fallback":null,"hofstede":{"pdi":57.0,"idv":51.0,"mas":42.0,"uai":86.0,"ltowvs":48.0,"ivr":44.0},"hofstede_label":"Spain","hofstede_cluster":null,"wb":{"gdp_pc":{"value":38627.2472148623,"year":2025},"gdp":{"value":1906453309985.88,"year":2025},"internet":{"value":95.7574516,"year":2024},"lpi":{"value":3.9,"year":2022},"corruption":{"value":6.92305594682693,"year":2023},"voice":{"value":13.1420265436173,"year":2023},"reg_quality":{"value":7.63140761852264,"year":2023}}},"ITA":{"name":"Italy","capital":"Rome","lat":41.9,"lon":12.5,"utc":1.0,"lang":["Italian"],"lang2":[],"religion":"Christian","legal":"civil","hof":"ITA","hof_fallback":null,"hofstede":{"pdi":50.0,"idv":76.0,"mas":70.0,"uai":75.0,"ltowvs":61.0,"ivr":30.0},"hofstede_label":"Italy","hofstede_cluster":null,"wb":{"gdp_pc":{"value":43308.6403060733,"year":2025},"gdp":{"value":2551556954100.35,"year":2025},"internet":{"value":89.2207202,"year":2024},"lpi":{"value":3.7,"year":2022},"corruption":{"value":6.05142092704773,"year":2023},"voice":{"value":12.2708393335342,"year":2023},"reg_quality":{"value":7.0843493938446,"year":2023}}},"NLD":{"name":"Netherlands","capital":"Amsterdam","lat":52.37,"lon":4.9,"utc":1.0,"lang":["Dutch"],"lang2":["English"],"religion":"Unaffiliated","legal":"civil","hof":"NET","hof_fallback":null,"hofstede":{"pdi":38.0,"idv":80.0,"mas":14.0,"uai":53.0,"ltowvs":67.0,"ivr":68.0},"hofstede_label":"Netherlands","hofstede_cluster":null,"wb":{"gdp_pc":{"value":73683.917132794,"year":2025},"gdp":{"value":1332767651100.39,"year":2025},"internet":{"value":97.00679779,"year":2024},"lpi":{"value":4.1,"year":2022},"corruption":{"value":20.5381052494049,"year":2023},"voice":{"value":17.118908405304,"year":2023},"reg_quality":{"value":19.7006303071976,"year":2023}}},"BEL":{"name":"Belgium","capital":"Brussels","lat":50.85,"lon":4.35,"utc":1.0,"lang":["Dutch","French"],"lang2":["German","English"],"religion":"Christian","legal":"civil","hof":"BEL","hof_fallback":null,"hofstede":{"pdi":65.0,"idv":75.0,"mas":54.0,"uai":94.0,"ltowvs":82.0,"ivr":57.0},"hofstede_label":"Belgium","hofstede_cluster":null,"wb":{"gdp_pc":{"value":60750.2735864647,"year":2025},"gdp":{"value":725466462859.646,"year":2025},"internet":{"value":95.77579144,"year":2024},"lpi":{"value":4.0,"year":2022},"corruption":{"value":14.7052888870239,"year":2023},"voice":{"value":14.5830191373825,"year":2023},"reg_quality":{"value":12.8504729270936,"year":2023}}},"AUT":{"name":"Austria","capital":"Vienna","lat":48.21,"lon":16.37,"utc":1.0,"lang":["German"],"lang2":[],"religion":"Christian","legal":"civil","hof":"AUT","hof_fallback":null,"hofstede":{"pdi":11.0,"idv":55.0,"mas":79.0,"uai":70.0,"ltowvs":60.0,"ivr":63.0},"hofstede_label":"Austria","hofstede_cluster":null,"wb":{"gdp_pc":{"value":62930.0351324599,"year":2025},"gdp":{"value":579470021095.418,"year":2025},"internet":{"value":91.92573373,"year":2025},"lpi":{"value":4.0,"year":2022},"corruption":{"value":12.4701861143112,"year":2023},"voice":{"value":15.5237315893173,"year":2023},"reg_quality":{"value":14.9750670194625,"year":2023}}},"CHE":{"name":"Switzerland","capital":"Bern","lat":46.95,"lon":7.45,"utc":1.0,"lang":["German","French","Italian"],"lang2":["English"],"religion":"Christian","legal":"civil","hof":"SWI","hof_fallback":null,"hofstede":{"pdi":34.0,"idv":68.0,"mas":70.0,"uai":58.0,"ltowvs":74.0,"ivr":66.0},"hofstede_label":"Switzerland","hofstede_cluster":null,"wb":{"gdp_pc":{"value":114769.012314293,"year":2025},"gdp":{"value":1043529899250.92,"year":2025},"internet":{"value":97.32103855,"year":2025},"lpi":{"value":4.1,"year":2022},"corruption":{"value":22.2419903278351,"year":2023},"voice":{"value":18.3152959346772,"year":2023},"reg_quality":{"value":19.0231801271438,"year":2023}}},"SWE":{"name":"Sweden","capital":"Stockholm","lat":59.33,"lon":18.07,"utc":1.0,"lang":["Swedish"],"lang2":["English"],"religion":"Christian","legal":"civil","hof":"SWE","hof_fallback":null,"hofstede":{"pdi":31.0,"idv":71.0,"mas":5.0,"uai":29.0,"ltowvs":53.0,"ivr":78.0},"hofstede_label":"Sweden","hofstede_cluster":null,"wb":{"gdp_pc":{"value":63133.2126736715,"year":2025},"gdp":{"value":668998664082.081,"year":2025},"internet":{"value":95.76629783,"year":2025},"lpi":{"value":4.0,"year":2022},"corruption":{"value":22.3107078075409,"year":2023},"voice":{"value":17.3231476545334,"year":2023},"reg_quality":{"value":18.8981881141662,"year":2023}}},"NOR":{"name":"Norway","capital":"Oslo","lat":59.91,"lon":10.75,"utc":1.0,"lang":["Norwegian"],"lang2":["English"],"religion":"Christian","legal":"civil","hof":"NOR","hof_fallback":null,"hofstede":{"pdi":31.0,"idv":69.0,"mas":8.0,"uai":50.0,"ltowvs":35.0,"ivr":55.0},"hofstede_label":"Norway","hofstede_cluster":null,"wb":{"gdp_pc":{"value":94594.1929573987,"year":2025},"gdp":{"value":530755719438.879,"year":2025},"internet":{"value":99.0,"year":2024},"lpi":{"value":3.7,"year":2022},"corruption":{"value":23.248737335205,"year":2023},"voice":{"value":19.5497977733612,"year":2023},"reg_quality":{"value":17.5727579593658,"year":2023}}},"DNK":{"name":"Denmark","capital":"Copenhagen","lat":55.68,"lon":12.57,"utc":1.0,"lang":["Danish"],"lang2":["English"],"religion":"Christian","legal":"civil","hof":"DEN","hof_fallback":null,"hofstede":{"pdi":18.0,"idv":74.0,"mas":16.0,"uai":23.0,"ltowvs":35.0,"ivr":70.0},"hofstede_label":"Denmark","hofstede_cluster":null,"wb":{"gdp_pc":{"value":76970.1535217919,"year":2025},"gdp":{"value":462526660468.393,"year":2025},"internet":{"value":99.76915157,"year":2024},"lpi":{"value":4.1,"year":2022},"corruption":{"value":26.1365840435028,"year":2023},"voice":{"value":18.3116924762726,"year":2023},"reg_quality":{"value":20.2347184419632,"year":2023}}},"POL":{"name":"Poland","capital":"Warsaw","lat":52.23,"lon":21.01,"utc":1.0,"lang":["Polish"],"lang2":[],"religion":"Christian","legal":"civil","hof":"POL","hof_fallback":null,"hofstede":{"pdi":68.0,"idv":60.0,"mas":64.0,"uai":93.0,"ltowvs":38.0,"ivr":29.0},"hofstede_label":"Poland","hofstede_cluster":null,"wb":{"gdp_pc":{"value":28419.5777395638,"year":2025},"gdp":{"value":1035491784197.44,"year":2025},"internet":{"value":88.58496367,"year":2024},"lpi":{"value":3.6,"year":2022},"corruption":{"value":6.21939939260483,"year":2023},"voice":{"value":6.89095985889435,"year":2023},"reg_quality":{"value":8.58212924003601,"year":2023}}},"PRT":{"name":"Portugal","capital":"Lisbon","lat":38.72,"lon":-9.14,"utc":0.0,"lang":["Portuguese"],"lang2":[],"religion":"Christian","legal":"civil","hof":"POR","hof_fallback":null,"hofstede":{"pdi":63.0,"idv":27.0,"mas":31.0,"uai":104.0,"ltowvs":28.0,"ivr":33.0},"hofstede_label":"Portugal","hofstede_cluster":null,"wb":{"gdp_pc":{"value":32081.8106150292,"year":2025},"gdp":{"value":346639825141.821,"year":2025},"internet":{"value":88.48704454,"year":2024},"lpi":{"value":3.4,"year":2022},"corruption":{"value":7.65943276882171,"year":2023},"voice":{"value":13.3241126537323,"year":2023},"reg_quality":{"value":8.30892205238342,"year":2023}}},"RUS":{"name":"Russia","capital":"Moscow","lat":55.76,"lon":37.62,"utc":3.0,"lang":["Russian"],"lang2":[],"religion":"Christian","legal":"civil","hof":"RUS","hof_fallback":null,"hofstede":{"pdi":93.0,"idv":39.0,"mas":36.0,"uai":95.0,"ltowvs":81.0,"ivr":20.0},"hofstede_label":"Russia","hofstede_cluster":null,"wb":{"gdp_pc":{"value":17546.609375,"year":2025},"gdp":{"value":2561310169358.74,"year":2025},"internet":{"value":94.36495368,"year":2024},"lpi":{"value":2.6,"year":2022},"corruption":{"value":-12.1514610052109,"year":2023},"voice":{"value":-14.1409358978272,"year":2023},"reg_quality":{"value":-12.3427904844284,"year":2023}}},"TUR":{"name":"Türkiye","capital":"Ankara","lat":39.93,"lon":32.86,"utc":3.0,"lang":["Turkish"],"lang2":[],"religion":"Muslim","legal":"civil","hof":"TUR","hof_fallback":null,"hofstede":{"pdi":66.0,"idv":37.0,"mas":45.0,"uai":85.0,"ltowvs":46.0,"ivr":49.0},"hofstede_label":"Turkey","hofstede_cluster":null,"wb":{"gdp_pc":{"value":18599.4420922378,"year":2025},"gdp":{"value":1597293229287.0,"year":2025},"internet":{"value":89.77024003,"year":2025},"lpi":{"value":3.4,"year":2022},"corruption":{"value":-5.52737998962402,"year":2023},"voice":{"value":-9.46634685993195,"year":2023},"reg_quality":{"value":-2.52461239695549,"year":2023}}},"SAU":{"name":"Saudi Arabia","capital":"Riyadh","lat":24.71,"lon":46.68,"utc":3.0,"lang":["Arabic"],"lang2":["English"],"religion":"Muslim","legal":"muslim","hof":"SAU","hof_fallback":"ARA","hofstede":{"pdi":80.0,"idv":38.0,"mas":53.0,"uai":68.0,"ltowvs":36.0,"ivr":52.0},"hofstede_label":"Saudi Arabia","hofstede_cluster":{"label":"Arab countries","dims":["pdi","idv","mas","uai"]},"wb":{"gdp_pc":{"value":34536.6555456551,"year":2025},"gdp":{"value":1276942933333.33,"year":2025},"internet":{"value":100.0,"year":2024},"lpi":{"value":3.4,"year":2022},"corruption":{"value":5.89647287130355,"year":2023},"voice":{"value":-15.5836174488068,"year":2023},"reg_quality":{"value":5.68777978420257,"year":2023}}},"ARE":{"name":"United Arab Emirates","capital":"Abu Dhabi","lat":24.45,"lon":54.38,"utc":4.0,"lang":["Arabic"],"lang2":["English"],"religion":"Muslim","legal":"muslim","hof":"ARA","hof_fallback":"ARA","hofstede":{"pdi":80.0,"idv":38.0,"mas":53.0,"uai":68.0,"ltowvs":23.0,"ivr":34.0},"hofstede_label":"Arab countries","hofstede_cluster":null,"wb":{"gdp_pc":{"value":50273.5126243239,"year":2024},"gdp":{"value":552324919095.872,"year":2024},"internet":{"value":100.0,"year":2024},"lpi":{"value":4.0,"year":2022},"corruption":{"value":11.8103021383285,"year":2023},"voice":{"value":-12.0443512201309,"year":2023},"reg_quality":{"value":11.4663056135178,"year":2023}}},"QAT":{"name":"Qatar","capital":"Doha","lat":25.29,"lon":51.53,"utc":3.0,"lang":["Arabic"],"lang2":["English"],"religion":"Muslim","legal":"muslim","hof":"ARA","hof_fallback":"ARA","hofstede":{"pdi":80.0,"idv":38.0,"mas":53.0,"uai":68.0,"ltowvs":23.0,"ivr":34.0},"hofstede_label":"Arab countries","hofstede_cluster":null,"wb":{"gdp_pc":{"value":72524.9066385222,"year":2025},"gdp":{"value":215559615384.615,"year":2025},"internet":{"value":98.08540344,"year":2024},"lpi":{"value":3.5,"year":2022},"corruption":{"value":7.72430813312531,"year":2023},"voice":{"value":-10.6766014099121,"year":2023},"reg_quality":{"value":10.7474497556686,"year":2023}}},"EGY":{"name":"Egypt","capital":"Cairo","lat":30.04,"lon":31.24,"utc":2.0,"lang":["Arabic"],"lang2":["English"],"religion":"Muslim","legal":"civil","hof":"EGY","hof_fallback":"ARA","hofstede":{"pdi":80.0,"idv":38.0,"mas":53.0,"uai":68.0,"ltowvs":7.0,"ivr":4.0},"hofstede_label":"Egypt","hofstede_cluster":{"label":"Arab countries","dims":["pdi","idv","mas","uai"]},"wb":{"gdp_pc":{"value":3085.80712036204,"year":2025},"gdp":{"value":365254630179.737,"year":2025},"internet":{"value":74.64839935,"year":2024},"lpi":{"value":3.1,"year":2022},"corruption":{"value":-8.22569435834884,"year":2023},"voice":{"value":-15.1732873916626,"year":2023},"reg_quality":{"value":-7.32001924514771,"year":2023}}},"MAR":{"name":"Morocco","capital":"Rabat","lat":34.02,"lon":-6.84,"utc":1.0,"lang":["Arabic","Tamazight"],"lang2":["French"],"religion":"Muslim","legal":"civil","hof":"MOR","hof_fallback":null,"hofstede":{"pdi":70.0,"idv":46.0,"mas":53.0,"uai":68.0,"ltowvs":14.0,"ivr":25.0},"hofstede_label":"Morocco","hofstede_cluster":null,"wb":{"gdp_pc":{"value":4672.46826171875,"year":2025},"gdp":{"value":182374250612.28,"year":2025},"internet":{"value":91.2,"year":2024},"lpi":{"value":2.54,"year":2018},"corruption":{"value":-5.89983439445496,"year":2023},"voice":{"value":-5.38186085224151,"year":2023},"reg_quality":{"value":-0.706287927925587,"year":2023}}},"ISR":{"name":"Israel","capital":"Jerusalem","lat":31.77,"lon":35.21,"utc":2.0,"lang":["Hebrew"],"lang2":["Arabic","English"],"religion":"Jewish","legal":"mixed","hof":"ISR","hof_fallback":null,"hofstede":{"pdi":13.0,"idv":54.0,"mas":47.0,"uai":81.0,"ltowvs":38.0},"hofstede_label":"Israel","hofstede_cluster":null,"wb":{"gdp_pc":{"value":60336.8477964194,"year":2025},"gdp":{"value":610777842873.595,"year":2025},"internet":{"value":88.18242225,"year":2024},"lpi":{"value":3.6,"year":2022},"corruption":{"value":9.12295353412628,"year":2023},"voice":{"value":7.08691102266312,"year":2023},"reg_quality":{"value":12.3397771120072,"year":2023}}},"ZAF":{"name":"South Africa","capital":"Pretoria","lat":-25.75,"lon":28.19,"utc":2.0,"lang":["English","Zulu","Xhosa","Afrikaans"],"lang2":[],"religion":"Christian","legal":"mixed","hof":"SAF","hof_fallback":"SAW","hofstede":{"pdi":49.0,"idv":65.0,"mas":63.0,"uai":49.0,"ltowvs":34.0,"ivr":63.0},"hofstede_label":"South Africa","hofstede_cluster":{"label":"South Africa white","dims":["pdi","idv","mas","uai"]},"wb":{"gdp_pc":{"value":6597.71450918774,"year":2025},"gdp":{"value":427184325997.307,"year":2025},"internet":{"value":78.35759735,"year":2024},"lpi":{"value":3.7,"year":2022},"corruption":{"value":-3.13137486577034,"year":2023},"voice":{"value":8.1938139796257,"year":2023},"reg_quality":{"value":-2.46067740023136,"year":2023}}},"NGA":{"name":"Nigeria","capital":"Abuja","lat":9.08,"lon":7.4,"utc":1.0,"lang":["English"],"lang2":["Hausa","Yoruba","Igbo"],"religion":"Mixed","legal":"common","hof":"NIG","hof_fallback":"AFW","hofstede":{"pdi":77.0,"idv":20.0,"mas":46.0,"uai":54.0,"ltowvs":13.0,"ivr":84.0},"hofstede_label":"Nigeria","hofstede_cluster":{"label":"Africa West","dims":["pdi","idv","mas","uai"]},"wb":{"gdp_pc":{"value":1224.25410237743,"year":2025},"gdp":{"value":290794361542.112,"year":2025},"internet":{"value":41.21139908,"year":2024},"lpi":{"value":2.6,"year":2022},"corruption":{"value":-11.450718164444,"year":2023},"voice":{"value":-6.03084003925324,"year":2023},"reg_quality":{"value":-10.3055166602135,"year":2023}}},"KEN":{"name":"Kenya","capital":"Nairobi","lat":-1.29,"lon":36.82,"utc":3.0,"lang":["English","Swahili"],"lang2":[],"religion":"Christian","legal":"common","hof":"AFE","hof_fallback":"AFE","hofstede":{"pdi":64.0,"idv":27.0,"mas":41.0,"uai":52.0,"ltowvs":32.0,"ivr":40.0},"hofstede_label":"Africa East","hofstede_cluster":null,"wb":{"gdp_pc":{"value":2362.86091198611,"year":2025},"gdp":{"value":135941278878.815,"year":2025},"internet":{"value":34.97622513,"year":2024},"lpi":{"value":2.81,"year":2018},"corruption":{"value":-8.48004305362701,"year":2023},"voice":{"value":-1.36587751656771,"year":2023},"reg_quality":{"value":-4.29887244105339,"year":2023}}},"IND":{"name":"India","capital":"New Delhi","lat":28.61,"lon":77.21,"utc":5.5,"lang":["Hindi","English"],"lang2":["Bengali","Tamil","Telugu","Marathi"],"religion":"Hindu","legal":"common","hof":"IND","hof_fallback":null,"hofstede":{"pdi":77.0,"idv":48.0,"mas":56.0,"uai":40.0,"ltowvs":51.0,"ivr":26.0},"hofstede_label":"India","hofstede_cluster":null,"wb":{"gdp_pc":{"value":2702.47987141553,"year":2025},"gdp":{"value":3956067115771.63,"year":2025},"internet":{"value":70.0,"year":2025},"lpi":{"value":3.4,"year":2022},"corruption":{"value":-4.02616223692894,"year":2023},"voice":{"value":1.03844937682152,"year":2023},"reg_quality":{"value":-1.50666539371014,"year":2023}}},"CHN":{"name":"China","capital":"Beijing","lat":39.9,"lon":116.41,"utc":8.0,"lang":["Mandarin"],"lang2":[],"religion":"Unaffiliated","legal":"civil","hof":"CHI","hof_fallback":null,"hofstede":{"pdi":80.0,"idv":20.0,"mas":66.0,"uai":30.0,"ltowvs":87.0,"ivr":24.0},"hofstede_label":"China","hofstede_cluster":null,"wb":{"gdp_pc":{"value":13861.970224368,"year":2025},"gdp":{"value":19498039388042.6,"year":2025},"internet":{"value":91.6,"year":2025},"lpi":{"value":3.7,"year":2022},"corruption":{"value":-0.0590711515396833,"year":2023},"voice":{"value":-16.5500956773758,"year":2023},"reg_quality":{"value":-3.92158588767052,"year":2023}}},"JPN":{"name":"Japan","capital":"Tokyo","lat":35.68,"lon":139.69,"utc":9.0,"lang":["Japanese"],"lang2":[],"religion":"Unaffiliated","legal":"civil","hof":"JPN","hof_fallback":null,"hofstede":{"pdi":54.0,"idv":46.0,"mas":95.0,"uai":92.0,"ltowvs":88.0,"ivr":42.0},"hofstede_label":"Japan","hofstede_cluster":null,"wb":{"gdp_pc":{"value":35951.0449549304,"year":2025},"gdp":{"value":4435162999976.94,"year":2025},"internet":{"value":85.54153081,"year":2024},"lpi":{"value":3.9,"year":2022},"corruption":{"value":15.3522670269012,"year":2023},"voice":{"value":12.1605588197708,"year":2023},"reg_quality":{"value":16.162584900856,"year":2023}}},"KOR":{"name":"South Korea","capital":"Seoul","lat":37.57,"lon":126.98,"utc":9.0,"lang":["Korean"],"lang2":[],"religion":"Unaffiliated","legal":"civil","hof":"KOR","hof_fallback":null,"hofstede":{"pdi":60.0,"idv":18.0,"mas":39.0,"uai":85.0,"ltowvs":100.0,"ivr":29.0},"hofstede_label":"Korea South","hofstede_cluster":null,"wb":{"gdp_pc":{"value":36226.9663637512,"year":2025},"gdp":{"value":1872374961553.15,"year":2025},"internet":{"value":97.89563777,"year":2024},"lpi":{"value":3.8,"year":2022},"corruption":{"value":9.83497422933578,"year":2023},"voice":{"value":9.4555469751358,"year":2023},"reg_quality":{"value":12.347755074501,"year":2023}}},"SGP":{"name":"Singapore","capital":"Singapore","lat":1.35,"lon":103.82,"utc":8.0,"lang":["English","Mandarin","Malay","Tamil"],"lang2":[],"religion":"Mixed","legal":"common","hof":"SIN","hof_fallback":null,"hofstede":{"pdi":74.0,"idv":20.0,"mas":48.0,"uai":8.0,"ltowvs":72.0,"ivr":46.0},"hofstede_label":"Singapore","hofstede_cluster":null,"wb":{"gdp_pc":{"value":98813.9788172877,"year":2025},"gdp":{"value":603869516998.738,"year":2025},"internet":{"value":94.37757178,"year":2024},"lpi":{"value":4.3,"year":2022},"corruption":{"value":22.442024230957,"year":2023},"voice":{"value":-0.719531260430813,"year":2023},"reg_quality":{"value":25.3945050239563,"year":2023}}},"IDN":{"name":"Indonesia","capital":"Jakarta","lat":-6.21,"lon":106.85,"utc":7.0,"lang":["Indonesian"],"lang2":[],"religion":"Muslim","legal":"civil","hof":"IDO","hof_fallback":null,"hofstede":{"pdi":78.0,"idv":14.0,"mas":46.0,"uai":48.0,"ltowvs":62.0,"ivr":38.0},"hofstede_label":"Indonesia","hofstede_cluster":null,"wb":{"gdp_pc":{"value":5059.62596411213,"year":2025},"gdp":{"value":1445642584163.81,"year":2025},"internet":{"value":72.78075544,"year":2024},"lpi":{"value":3.0,"year":2022},"corruption":{"value":-5.35559415817261,"year":2023},"voice":{"value":1.52881099283695,"year":2023},"reg_quality":{"value":3.31516632437706,"year":2023}}},"VNM":{"name":"Vietnam","capital":"Hanoi","lat":21.03,"lon":105.85,"utc":7.0,"lang":["Vietnamese"],"lang2":[],"religion":"Unaffiliated","legal":"civil","hof":"VIE","hof_fallback":null,"hofstede":{"pdi":70.0,"idv":20.0,"mas":40.0,"uai":30.0,"ltowvs":57.0,"ivr":35.0},"hofstede_label":"Vietnam","hofstede_cluster":null,"wb":{"gdp_pc":{"value":5065.99091899299,"year":2025},"gdp":{"value":514697215165.065,"year":2025},"internet":{"value":84.15,"year":2024},"lpi":{"value":3.3,"year":2022},"corruption":{"value":-4.57395708560944,"year":2023},"voice":{"value":-13.6603908538819,"year":2023},"reg_quality":{"value":-4.20868501067161,"year":2023}}},"THA":{"name":"Thailand","capital":"Bangkok","lat":13.76,"lon":100.5,"utc":7.0,"lang":["Thai"],"lang2":[],"religion":"Buddhist","legal":"civil","hof":"THA","hof_fallback":null,"hofstede":{"pdi":64.0,"idv":20.0,"mas":34.0,"uai":64.0,"ltowvs":32.0,"ivr":45.0},"hofstede_label":"Thailand","hofstede_cluster":null,"wb":{"gdp_pc":{"value":8056.56359761558,"year":2025},"gdp":{"value":577009981112.015,"year":2025},"internet":{"value":90.86718789,"year":2024},"lpi":{"value":3.5,"year":2022},"corruption":{"value":-5.3795585334301,"year":2023},"voice":{"value":-4.95408490300178,"year":2023},"reg_quality":{"value":1.74083560705185,"year":2023}}},"PHL":{"name":"Philippines","capital":"Manila","lat":14.6,"lon":120.98,"utc":8.0,"lang":["Filipino","English"],"lang2":[],"religion":"Christian","legal":"mixed","hof":"PHI","hof_fallback":null,"hofstede":{"pdi":94.0,"idv":32.0,"mas":64.0,"uai":44.0,"ltowvs":27.0,"ivr":42.0},"hofstede_label":"Philippines","hofstede_cluster":null,"wb":{"gdp_pc":{"value":4170.72347271451,"year":2025},"gdp":{"value":487086123720.417,"year":2025},"internet":{"value":67.26300914,"year":2024},"lpi":{"value":3.3,"year":2022},"corruption":{"value":-5.9140397310257,"year":2023},"voice":{"value":-0.185217704623938,"year":2023},"reg_quality":{"value":1.80680459737778,"year":2023}}},"MYS":{"name":"Malaysia","capital":"Kuala Lumpur","lat":3.14,"lon":101.69,"utc":8.0,"lang":["Malay"],"lang2":["English","Mandarin"],"religion":"Muslim","legal":"common","hof":"MAL","hof_fallback":null,"hofstede":{"pdi":104.0,"idv":26.0,"mas":50.0,"uai":36.0,"ltowvs":41.0,"ivr":57.0},"hofstede_label":"Malaysia","hofstede_cluster":null,"wb":{"gdp_pc":{"value":13124.5554178269,"year":2025},"gdp":{"value":472193128644.597,"year":2025},"internet":{"value":98.0206059,"year":2024},"lpi":{"value":3.6,"year":2022},"corruption":{"value":3.25183501839638,"year":2023},"voice":{"value":0.963813498616219,"year":2023},"reg_quality":{"value":7.2698370218277,"year":2023}}},"AUS":{"name":"Australia","capital":"Canberra","lat":-35.28,"lon":149.13,"utc":10.0,"lang":["English"],"lang2":[],"religion":"Christian","legal":"common","hof":"AUL","hof_fallback":null,"hofstede":{"pdi":38.0,"idv":90.0,"mas":61.0,"uai":51.0,"ltowvs":21.0,"ivr":71.0},"hofstede_label":"Australia","hofstede_cluster":null,"wb":{"gdp_pc":{"value":65129.7227990563,"year":2025},"gdp":{"value":1798518933689.21,"year":2025},"internet":{"value":96.13140106,"year":2024},"lpi":{"value":3.7,"year":2022},"corruption":{"value":19.5932543277741,"year":2023},"voice":{"value":16.5726212263107,"year":2023},"reg_quality":{"value":21.3642610311508,"year":2023}}},"NZL":{"name":"New Zealand","capital":"Wellington","lat":-41.29,"lon":174.78,"utc":12.0,"lang":["English","Māori"],"lang2":[],"religion":"Unaffiliated","legal":"common","hof":"NZL","hof_fallback":null,"hofstede":{"pdi":22.0,"idv":79.0,"mas":58.0,"uai":49.0,"ltowvs":33.0,"ivr":75.0},"hofstede_label":"New Zealand","hofstede_cluster":null,"wb":{"gdp_pc":{"value":49591.0405731713,"year":2025},"gdp":{"value":264057413739.965,"year":2025},"internet":{"value":93.51930237,"year":2024},"lpi":{"value":3.6,"year":2022},"corruption":{"value":22.9250502586365,"year":2023},"voice":{"value":18.565618276596,"year":2023},"reg_quality":{"value":21.012512087822,"year":2023}}}},"variances":{"pdi":470.98298676748584,"idv":568.1125813904642,"mas":387.70678428901493,"uai":553.9672337744172,"ltowvs":572.1789933837429,"ivr":493.1504220141057},"trade":{"as_of":"2026-11","blocs":{"European Union single market":["IRL","FRA","DEU","ESP","ITA","NLD","BEL","AUT","SWE","DNK","POL","PRT"],"EFTA":["CHE","NOR"],"USMCA":["USA","CAN","MEX"],"CPTPP":["CAN","MEX","CHL","PER","JPN","AUS","NZL","SGP","VNM","MYS","GBR"],"RCEP":["CHN","JPN","KOR","AUS","NZL","SGP","IDN","VNM","THA","PHL","MYS"],"ASEAN Free Trade Area":["SGP","IDN","VNM","THA","PHL","MYS"],"Gulf Cooperation Council customs union":["SAU","ARE","QAT"],"Greater Arab Free Trade Area":["SAU","ARE","QAT","EGY","MAR"],"Mercosur":["BRA","ARG"],"Pacific Alliance":["MEX","COL","PER","CHL"],"AfCFTA":["EGY","ZAF","NGA","KEN"]},"fta_pairs":[["ARE","IND"],["ARE","ISR"],["ARE","TUR"],["ARG","CHL"],["ARG","COL"],["ARG","PER"],["AUS","CHL"],["AUS","CHN"],["AUS","GBR"],["AUS","IDN"],["AUS","IND"],["AUS","KOR"],["AUS","MYS"],["AUS","NZL"],["AUS","SGP"],["AUS","THA"],["AUS","USA"],["AUT","CAN"],["AUT","CHE"],["AUT","CHL"],["AUT","COL"],["AUT","EGY"],["AUT","GBR"],["AUT","ISR"],["AUT","JPN"],["AUT","KEN"],["AUT","KOR"],["AUT","MAR"],["AUT","MEX"],["AUT","NOR"],["AUT","NZL"],["AUT","PER"],["AUT","SGP"],["AUT","TUR"],["AUT","VNM"],["AUT","ZAF"],["BEL","CAN"],["BEL","CHE"],["BEL","CHL"],["BEL","COL"],["BEL","EGY"],["BEL","GBR"],["BEL","ISR"],["BEL","JPN"],["BEL","KEN"],["BEL","KOR"],["BEL","MAR"],["BEL","MEX"],["BEL","NOR"],["BEL","NZL"],["BEL","PER"],["BEL","SGP"],["BEL","TUR"],["BEL","VNM"],["BEL","ZAF"],["BRA","CHL"],["BRA","COL"],["BRA","PER"],["CAN","CHE"],["CAN","CHL"],["CAN","COL"],["CAN","DEU"],["CAN","DNK"],["CAN","ESP"],["CAN","FRA"],["CAN","GBR"],["CAN","IRL"],["CAN","ISR"],["CAN","ITA"],["CAN","KOR"],["CAN","NLD"],["CAN","NOR"],["CAN","PER"],["CAN","POL"],["CAN","PRT"],["CAN","SWE"],["CHE","CHL"],["CHE","CHN"],["CHE","COL"],["CHE","DEU"],["CHE","DNK"],["CHE","EGY"],["CHE","ESP"],["CHE","FRA"],["CHE","GBR"],["CHE","IDN"],["CHE","IND"],["CHE","IRL"],["CHE","ISR"],["CHE","ITA"],["CHE","JPN"],["CHE","KOR"],["CHE","MAR"],["CHE","MEX"],["CHE","NLD"],["CHE","PER"],["CHE","PHL"],["CHE","POL"],["CHE","PRT"],["CHE","SGP"],["CHE","SWE"],["CHE","TUR"],["CHE","ZAF"],["CHL","CHN"],["CHL","DEU"],["CHL","DNK"],["CHL","ESP"],["CHL","FRA"],["CHL","GBR"],["CHL","IRL"],["CHL","ITA"],["CHL","JPN"],["CHL","KOR"],["CHL","MYS"],["CHL","NLD"],["CHL","NOR"],["CHL","POL"],["CHL","PRT"],["CHL","SWE"],["CHL","THA"],["CHL","TUR"],["CHL","USA"],["CHL","VNM"],["CHN","IDN"],["CHN","KOR"],["CHN","MYS"],["CHN","NZL"],["CHN","PER"],["CHN","PHL"],["CHN","SGP"],["CHN","THA"],["CHN","VNM"],["COL","DEU"],["COL","DNK"],["COL","ESP"],["COL","FRA"],["COL","GBR"],["COL","IRL"],["COL","ISR"],["COL","ITA"],["COL","KOR"],["COL","NLD"],["COL","NOR"],["COL","POL"],["COL","PRT"],["COL","SWE"],["COL","USA"],["DEU","EGY"],["DEU","GBR"],["DEU","ISR"],["DEU","JPN"],["DEU","KEN"],["DEU","KOR"],["DEU","MAR"],["DEU","MEX"],["DEU","NOR"],["DEU","NZL"],["DEU","PER"],["DEU","SGP"],["DEU","TUR"],["DEU","VNM"],["DEU","ZAF"],["DNK","EGY"],["DNK","GBR"],["DNK","ISR"],["DNK","JPN"],["DNK","KEN"],["DNK","KOR"],["DNK","MAR"],["DNK","MEX"],["DNK","NOR"],["DNK","NZL"],["DNK","PER"],["DNK","SGP"],["DNK","TUR"],["DNK","VNM"],["DNK","ZAF"],["EGY","ESP"],["EGY","FRA"],["EGY","GBR"],["EGY","IRL"],["EGY","ITA"],["EGY","MAR"],["EGY","NLD"],["EGY","NOR"],["EGY","POL"],["EGY","PRT"],["EGY","SWE"],["EGY","TUR"],["ESP","GBR"],["ESP","ISR"],["ESP","JPN"],["ESP","KEN"],["ESP","KOR"],["ESP","MAR"],["ESP","MEX"],["ESP","NOR"],["ESP","NZL"],["ESP","PER"],["ESP","SGP"],["ESP","TUR"],["ESP","VNM"],["ESP","ZAF"],["FRA","GBR"],["FRA","ISR"],["FRA","JPN"],["FRA","KEN"],["FRA","KOR"],["FRA","MAR"],["FRA","MEX"],["FRA","NOR"],["FRA","NZL"],["FRA","PER"],["FRA","SGP"],["FRA","TUR"],["FRA","VNM"],["FRA","ZAF"],["GBR","IRL"],["GBR","ISR"],["GBR","ITA"],["GBR","JPN"],["GBR","KEN"],["GBR","KOR"],["GBR","MAR"],["GBR","MEX"],["GBR","NLD"],["GBR","NOR"],["GBR","NZL"],["GBR","PER"],["GBR","POL"],["GBR","PRT"],["GBR","SGP"],["GBR","SWE"],["GBR","TUR"],["GBR","VNM"],["GBR","ZAF"],["IDN","IND"],["IDN","JPN"],["IDN","KOR"],["IDN","NOR"],["IND","JPN"],["IND","KOR"],["IND","MYS"],["IND","NOR"],["IND","PHL"],["IND","SGP"],["IND","THA"],["IND","VNM"],["IRL","ISR"],["IRL","JPN"],["IRL","KEN"],["IRL","KOR"],["IRL","MAR"],["IRL","MEX"],["IRL","NOR"],["IRL","NZL"],["IRL","PER"],["IRL","SGP"],["IRL","TUR"],["IRL","VNM"],["IRL","ZAF"],["ISR","ITA"],["ISR","KOR"],["ISR","MEX"],["ISR","NLD"],["ISR","NOR"],["ISR","POL"],["ISR","PRT"],["ISR","SWE"],["ISR","TUR"],["ISR","USA"],["ITA","JPN"],["ITA","KEN"],["ITA","KOR"],["ITA","MAR"],["ITA","MEX"],["ITA","NOR"],["ITA","NZL"],["ITA","PER"],["ITA","SGP"],["ITA","TUR"],["ITA","VNM"],["ITA","ZAF"],["JPN","MEX"],["JPN","MYS"],["JPN","NLD"],["JPN","PER"],["JPN","PHL"],["JPN","POL"],["JPN","PRT"],["JPN","SGP"],["JPN","SWE"],["JPN","THA"],["JPN","VNM"],["KEN","NLD"],["KEN","POL"],["KEN","PRT"],["KEN","SWE"],["KOR","MYS"],["KOR","NLD"],["KOR","NOR"],["KOR","NZL"],["KOR","PER"],["KOR","PHL"],["KOR","POL"],["KOR","PRT"],["KOR","SGP"],["KOR","SWE"],["KOR","THA"],["KOR","TUR"],["KOR","USA"],["KOR","VNM"],["MAR","NLD"],["MAR","NOR"],["MAR","POL"],["MAR","PRT"],["MAR","SWE"],["MAR","TUR"],["MAR","USA"],["MEX","NLD"],["MEX","NOR"],["MEX","POL"],["MEX","PRT"],["MEX","SWE"],["MYS","NZL"],["MYS","TUR"],["NLD","NOR"],["NLD","NZL"],["NLD","PER"],["NLD","SGP"],["NLD","TUR"],["NLD","VNM"],["NLD","ZAF"],["NOR","PER"],["NOR","PHL"],["NOR","POL"],["NOR","PRT"],["NOR","SGP"],["NOR","SWE"],["NOR","TUR"],["NOR","ZAF"],["NZL","POL"],["NZL","PRT"],["NZL","SGP"],["NZL","SWE"],["NZL","THA"],["PER","POL"],["PER","PRT"],["PER","SGP"],["PER","SWE"],["PER","THA"],["PER","USA"],["POL","SGP"],["POL","TUR"],["POL","VNM"],["POL","ZAF"],["PRT","SGP"],["PRT","TUR"],["PRT","VNM"],["PRT","ZAF"],["SGP","SWE"],["SGP","TUR"],["SGP","USA"],["SWE","TUR"],["SWE","VNM"],["SWE","ZAF"]],"sanctions":{"IRL-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"FRA-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"DEU-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"ESP-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"ITA-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"NLD-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"BEL-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"AUT-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"RUS-SWE":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"DNK-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"POL-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"PRT-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"RUS-USA":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"CAN-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"GBR-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"CHE-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"NOR-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"AUS-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"NZL-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"JPN-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"KOR-RUS":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"RUS-SGP":{"score":10,"note":"Broad sectoral, financial and export sanctions on Russia (2014, expanded 2022)"},"CHN-USA":{"score":7,"note":"Section 301 tariffs, Entity List export controls, outbound-investment rules and data/telecom restrictions"},"CHN-JPN":{"score":3,"note":"Targeted export controls on advanced semiconductor equipment"},"CHN-NLD":{"score":3,"note":"Targeted export controls on advanced semiconductor equipment"}},"borders":[["CAN","USA"],["MEX","USA"],["ARG","BRA"],["BRA","COL"],["BRA","PER"],["ARG","CHL"],["CHL","PER"],["COL","PER"],["GBR","IRL"],["BEL","FRA"],["DEU","FRA"],["ESP","FRA"],["FRA","ITA"],["CHE","FRA"],["DEU","NLD"],["BEL","DEU"],["AUT","DEU"],["CHE","DEU"],["DEU","DNK"],["DEU","POL"],["ESP","PRT"],["AUT","ITA"],["CHE","ITA"],["BEL","NLD"],["AUT","CHE"],["NOR","SWE"],["NOR","RUS"],["POL","RUS"],["CHN","RUS"],["ARE","SAU"],["QAT","SAU"],["EGY","ISR"],["CHN","VNM"],["CHN","IND"],["MYS","THA"],["IDN","MYS"]]},"industries":{"live_sports_media":{"name":"Live sports media (broadcast & streaming rights)","weights":{"C":30,"A":30,"G":25,"E":15},"lang_basis":"audience","sub":{"C":{"values":0.25,"language":0.45,"religion":0.3},"A":{"trade":0.05,"sanctions":0.2,"governance":0.25,"voice":0.4,"legal":0.1},"G":{"distance":0.1,"timezone":0.55,"border":0.05,"logistics":0,"digital":0.3},"E":{"income":1.0}},"why":{"C":"The product is commentary, storytelling and fandom. Ghemawat flags products with high linguistic content (TV programming) as most sensitive to cultural distance, and sports add religious and social norms: which sponsors are allowed, what can be shown, when people watch (e.g., Ramadan schedules).","A":"Broadcasting is one of the most government-involved industries: content licensing, state ownership of broadcasters and sports properties, and political scrutiny of cross-border sports deals. Media openness (WGI Voice & Accountability) gets the largest sub-weight because it proxies how freely content can be distributed.","G":"Digital content is weightless, so physical distance and logistics barely matter. Time zones are the exception: live rights lose most of their value when the event airs while the audience sleeps or works. Communication infrastructure (internet penetration) determines streaming reach.","E":"Income gaps matter less than for physical goods because rights are priced to each market's ad and subscription economics, but willingness to pay still sets the size of the prize. Lowest weight."},"ghemawat":"Ghemawat (2001) lists media among industries most sensitive to cultural and administrative distance, and least to geographic distance."},"film_tv":{"name":"Film, TV & publishing (non-live content)","weights":{"C":40,"A":30,"G":10,"E":20},"lang_basis":"audience","sub":{"C":{"values":0.3,"language":0.5,"religion":0.2},"A":{"trade":0.05,"sanctions":0.15,"governance":0.25,"voice":0.4,"legal":0.15},"G":{"distance":0.2,"timezone":0.1,"border":0.1,"logistics":0,"digital":0.6},"E":{"income":1.0}},"why":{"C":"Highest linguistic content of any product; dubbing, subtitles and local taste drive success.","A":"Content quotas, censorship and state broadcasters make media heavily regulated.","G":"Weightless product; only digital reach matters. Unlike live sports, content can be time-shifted, so time zones barely count.","E":"Pricing tiers adjust to income, but the size of the paying audience still varies with wealth."},"ghemawat":"Ghemawat: products with high linguistic content are most sensitive to cultural distance."},"software_saas":{"name":"Software / SaaS (B2B)","weights":{"C":20,"A":40,"G":10,"E":30},"lang_basis":"business","sub":{"C":{"values":0.4,"language":0.5,"religion":0.1},"A":{"trade":0.1,"sanctions":0.25,"governance":0.25,"voice":0.25,"legal":0.15},"G":{"distance":0.1,"timezone":0.4,"border":0,"logistics":0,"digital":0.5},"E":{"income":1.0}},"why":{"C":"Interface localization and sales culture matter, but B2B buyers often work in English.","A":"Data-localization, privacy law and export controls are the main barriers.","G":"Weightless; time zones affect support and sales coverage; internet reach sets the addressable market.","E":"Enterprise budgets and labor costs scale with income; a big income gap means different price points."},"ghemawat":"Ghemawat: services with heavy government involvement are sensitive to administrative distance."},"consumer_food":{"name":"Packaged food & consumer goods","weights":{"C":35,"A":20,"G":20,"E":25},"lang_basis":"audience","sub":{"C":{"values":0.4,"language":0.3,"religion":0.3},"A":{"trade":0.4,"sanctions":0.15,"governance":0.25,"voice":0.05,"legal":0.15},"G":{"distance":0.35,"timezone":0,"border":0.15,"logistics":0.5,"digital":0},"E":{"income":1.0}},"why":{"C":"Tastes, religion (halal, alcohol, pork) and packaging language decide whether a product sells.","A":"Tariffs, labelling and food-safety rules apply at the border.","G":"Bulky, perishable goods are sensitive to distance and logistics quality.","E":"Price points and pack sizes must match household income."},"ghemawat":"Ghemawat: products with country-specific quality standards and tastes (food) are culturally sensitive."},"luxury":{"name":"Luxury & premium apparel","weights":{"C":20,"A":15,"G":15,"E":50},"lang_basis":"business","sub":{"C":{"values":0.5,"language":0.2,"religion":0.3},"A":{"trade":0.4,"sanctions":0.2,"governance":0.2,"voice":0,"legal":0.2},"G":{"distance":0.3,"timezone":0,"border":0.1,"logistics":0.6,"digital":0},"E":{"income":1.0}},"why":{"C":"Brand meaning travels, but values (status display, modesty norms) shape demand.","A":"Import duties and counterfeit enforcement matter.","G":"High value-to-weight; logistics quality matters more than distance.","E":"Demand depends almost entirely on the size of the wealthy consumer base. Highest economic weight."},"ghemawat":"Ghemawat: economic distance dominates where demand varies with income."},"auto_mfg":{"name":"Automotive & industrial manufacturing","weights":{"C":15,"A":30,"G":30,"E":25},"lang_basis":"business","sub":{"C":{"values":0.6,"language":0.3,"religion":0.1},"A":{"trade":0.45,"sanctions":0.2,"governance":0.2,"voice":0,"legal":0.15},"G":{"distance":0.4,"timezone":0.05,"border":0.2,"logistics":0.35,"digital":0},"E":{"income":1.0}},"why":{"C":"Mostly B2B supply chains; cultural fit matters for management, not the product.","A":"Tariffs, local-content rules and national-champion protection.","G":"Heavy components and just-in-time supply chains punish distance.","E":"Labor-cost arbitrage and buyer income both scale with income gaps."},"ghemawat":"Ghemawat: heavy, bulky products and vertically integrated supply chains are sensitive to geographic distance."},"financial":{"name":"Banking & financial services","weights":{"C":20,"A":50,"G":5,"E":25},"lang_basis":"business","sub":{"C":{"values":0.6,"language":0.3,"religion":0.1},"A":{"trade":0.15,"sanctions":0.3,"governance":0.3,"voice":0.05,"legal":0.2},"G":{"distance":0.2,"timezone":0.5,"border":0.1,"logistics":0,"digital":0.2},"E":{"income":1.0}},"why":{"C":"Trust and relationship norms matter for retail; less for wholesale.","A":"Licensing, capital rules, sanctions compliance and legal-system compatibility dominate. Highest administrative weight.","G":"Weightless; time zones matter for trading and settlement.","E":"Product mix and credit risk vary with income."},"ghemawat":"Ghemawat: regulated, strategically sensitive sectors face the most administrative distance."},"cement":{"name":"Cement & building materials","weights":{"C":5,"A":25,"G":55,"E":15},"lang_basis":"business","sub":{"C":{"values":0.6,"language":0.2,"religion":0.2},"A":{"trade":0.35,"sanctions":0.2,"governance":0.3,"voice":0.05,"legal":0.1},"G":{"distance":0.55,"timezone":0,"border":0.2,"logistics":0.25,"digital":0},"E":{"income":1.0}},"why":{"C":"Cement has almost no cultural content. Language barriers matter little for cement (the assignment's own example).","A":"Construction is government-heavy (permits, public procurement, tariffs).","G":"Low value-to-weight; transport cost makes distance the deciding factor. Highest geographic weight.","E":"Construction demand tracks income, but cement is a necessity."},"ghemawat":"Ghemawat: products with a low value-to-weight ratio (cement) are most sensitive to geographic distance."},"neutral":{"name":"Industry-neutral baseline (equal weights)","weights":{"C":25,"A":25,"G":25,"E":25},"lang_basis":"business","sub":{"C":{"values":0.5,"language":0.3,"religion":0.2},"A":{"trade":0.25,"sanctions":0.2,"governance":0.25,"voice":0.1,"legal":0.2},"G":{"distance":0.4,"timezone":0.15,"border":0.15,"logistics":0.15,"digital":0.15},"E":{"income":1.0}},"why":{"C":"Equal weight: no industry assumption.","A":"Equal weight: no industry assumption.","G":"Equal weight: no industry assumption.","E":"Equal weight: no industry assumption."},"ghemawat":"Equal weights for comparison only. Ghemawat argues against using them."}},"sources":{"hofstede":{"dim":"C","label":"Hofstede, Hofstede & Minkov, 6-D cultural dimensions dataset (2015 release; values per Cultures and Organizations, 3rd ed., 2010)","url":"https://geerthofstede.com/research-and-vsm/dimension-data-matrix/"},"factbook_lang":{"dim":"C","label":"CIA World Factbook: Languages field (country profiles)","url":"https://www.cia.gov/the-world-factbook/field/languages/"},"pew_religion":{"dim":"C","label":"Pew Research Center, How the Global Religious Landscape Changed From 2010 to 2020 (June 2025)","url":"https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/"},"ustr_fta":{"dim":"A","label":"USTR: U.S. Free Trade Agreements in force","url":"https://ustr.gov/trade-agreements/free-trade-agreements"},"wto_rta":{"dim":"A","label":"WTO Regional Trade Agreements Information System (agreements in force)","url":"https://rtais.wto.org/"},"ofac":{"dim":"A","label":"U.S. Treasury OFAC: Sanctions Programs and Country Information","url":"https://ofac.treasury.gov/sanctions-programs-and-country-information"},"wgi":{"dim":"A","label":"World Bank, Worldwide Governance Indicators: Control of Corruption, Regulatory Quality, Voice & Accountability (via WDI CC.EST, RQ.EST, VA.EST)","url":"https://www.worldbank.org/en/publication/worldwide-governance-indicators"},"juriglobe":{"dim":"A","label":"JuriGlobe World Legal Systems, University of Ottawa (legal-family classification)","url":"http://www.juriglobe.ca/eng/"},"capitals":{"dim":"G","label":"Great-circle distance computed from capital-city coordinates (CIA World Factbook: Capital field)","url":"https://www.cia.gov/the-world-factbook/field/capital/"},"lpi":{"dim":"G","label":"World Bank Logistics Performance Index 2023 (WDI LP.LPI.OVRL.XQ)","url":"https://lpi.worldbank.org/international/global"},"itu":{"dim":"G","label":"ITU via World Bank WDI: Individuals using the Internet, % of population (IT.NET.USER.ZS)","url":"https://data.worldbank.org/indicator/IT.NET.USER.ZS"},"wdi_gdppc":{"dim":"E","label":"World Bank WDI: GDP per capita, current US$ (NY.GDP.PCAP.CD)","url":"https://data.worldbank.org/indicator/NY.GDP.PCAP.CD"},"wdi_gdp":{"dim":"E","label":"World Bank WDI: GDP, current US$ (NY.GDP.MKTP.CD)","url":"https://data.worldbank.org/indicator/NY.GDP.MKTP.CD"},"ghemawat":{"dim":"-","label":"Ghemawat, P. (2001). Distance Still Matters: The Hard Reality of Global Expansion. Harvard Business Review 79(8).","url":"https://hbr.org/2001/09/distance-still-matters-the-hard-reality-of-global-expansion"},"kogut_singh":{"dim":"-","label":"Kogut, B. & Singh, H. (1988). The Effect of National Culture on the Choice of Entry Mode. JIBS 19(3).","url":"https://doi.org/10.1057/palgrave.jibs.8490394"}},"pair_notes":{"USA-SAU":{"C":["Hofstede published no Saudi-specific scores for power distance, individualism, masculinity or uncertainty avoidance. Like Hofstede's own country comparisons, the tool uses his 'Arab countries' regional cluster for those four and Saudi-specific values for long-term orientation and indulgence.","The Saudi weekend is Friday–Saturday, and Ramadan moves about 11 days earlier each year, shifting peak viewing into late-night hours for a month."],"A":["No U.S.–Saudi free trade agreement. The relationship runs through a 2003 Trade and Investment Framework Agreement (TIFA). Saudi Arabia joined the WTO in December 2005.","Audiovisual content and broadcast licensing are regulated by Saudi Arabia's General Commission for Audiovisual Media (GCAM).","Cross-border sports deals with Saudi state entities draw U.S. political scrutiny, e.g. the U.S. Senate Permanent Subcommittee on Investigations hearing on the PGA Tour–PIF framework agreement (July 2023)."],"G":["Riyadh is UTC+3 with no daylight saving; U.S. Eastern is UTC−5 (UTC−4 in summer), so the gap is 8 hours in winter and 7 in summer. A 2 p.m. ET Sunday finish airs at 10 p.m. in Riyadh. An event played in Saudi Arabia in its evening airs in the U.S. morning."],"E":["Saudi income is below the U.S. but still high-income by World Bank classification, and internet penetration is near-universal, so the market's ability to pay is not the constraint."]}},"hofstede_dims":["pdi","idv","mas","uai","ltowvs","ivr"]};
+const C = DATA.countries, ISO = Object.keys(C), IND = DATA.industries;
+const DIMS = ["C","A","G","E"];
+const DIMN = {C:"Cultural",A:"Administrative",G:"Geographic",E:"Economic"};
+const SUBN = {values:"Values (Hofstede)",language:"Language",religion:"Religion",
+  trade:"Trade agreement",sanctions:"Sanctions / export controls",governance:"Governance gap",voice:"Media & political openness",legal:"Legal system",
+  distance:"Physical distance",timezone:"Time-zone gap",border:"Shared border",logistics:"Logistics quality",digital:"Digital reach",
+  income:"Income gap"};
+const SUBSRC = {values:["hofstede"],language:["factbook_lang"],religion:["pew_religion"],trade:["ustr_fta","wto_rta"],sanctions:["ofac"],
+  governance:["wgi"],voice:["wgi"],legal:["juriglobe"],distance:["capitals"],timezone:["capitals"],border:["capitals"],logistics:["lpi"],digital:["itu"],income:["wdi_gdppc","wdi_gdp"]};
+const HOFN = {pdi:"Power distance",idv:"Individualism",mas:"Masculinity",uai:"Uncertainty avoidance",ltowvs:"Long-term orientation",ivr:"Indulgence"};
+const SRCKEYS = Object.keys(DATA.sources);
+const srcNum = k => SRCKEYS.indexOf(k) + 1;
+const clamp = (x,a,b) => Math.max(a, Math.min(b, x));
+const fmt = (x,d=1) => Number(x).toFixed(d);
+const money = x => "$" + Math.round(x).toLocaleString("en-US");
+const wgi = (c,k) => C[c].wb[k].value / 10;   // WDI bulk file stores WGI estimates x10; rescale to the usual -2.5..+2.5
+
+/* ---------- pair-level raw metrics ---------- */
+function kogutSingh(a, b){
+  const ha = C[a].hofstede, hb = C[b].hofstede; let s = 0, n = 0, gaps = [];
+  for (const d of DATA.hofstede_dims){
+    if (ha[d] == null || hb[d] == null) continue;
+    s += (ha[d]-hb[d])**2 / DATA.variances[d]; n++;
+    gaps.push({d, a:ha[d], b:hb[d], gap:Math.abs(ha[d]-hb[d])});
+  }
+  return {ks: s/n, n, gaps: gaps.sort((x,y)=>y.gap-x.gap)};
+}
+function km(a, b){
+  const R = 6371, r = Math.PI/180, A = C[a], B = C[b];
+  const dl = (B.lat-A.lat)*r, dn = (B.lon-A.lon)*r;
+  const h = Math.sin(dl/2)**2 + Math.cos(A.lat*r)*Math.cos(B.lat*r)*Math.sin(dn/2)**2;
+  return 2*R*Math.asin(Math.sqrt(h));
+}
+const tzGap = (a,b) => { const d = Math.abs(C[a].utc - C[b].utc); return Math.min(d, 24-d); };
+const gov = c => (wgi(c,"corruption") + wgi(c,"reg_quality")) / 2;
+const incGap = (a,b) => Math.abs(Math.log(C[a].wb.gdp_pc.value / C[b].wb.gdp_pc.value));
+const key = (a,b) => [a,b].sort().join("-");
+const FTA = new Set(DATA.trade.fta_pairs.map(p => p.join("-")));
+const BORDER = new Set(DATA.trade.borders.map(p => p.join("-")));
+function sharedAgreement(a, b){
+  for (const [name, m] of Object.entries(DATA.trade.blocs)) if (m.includes(a) && m.includes(b)) return name;
+  return FTA.has(key(a,b)) ? "bilateral / bloc-to-country FTA" : null;
+}
+
+/* percentile pools across every ordered pair */
+const PAIRS = []; ISO.forEach(a => ISO.forEach(b => { if (a !== b) PAIRS.push([a,b]); }));
+const POOL = {ks:[], km:[], gov:[], voice:[], inc:[]};
+PAIRS.forEach(([a,b]) => {
+  POOL.ks.push(kogutSingh(a,b).ks); POOL.km.push(km(a,b));
+  POOL.gov.push(Math.abs(gov(a)-gov(b))); POOL.voice.push(Math.abs(wgi(a,"voice")-wgi(b,"voice")));
+  POOL.inc.push(incGap(a,b));
+});
+Object.values(POOL).forEach(arr => arr.sort((x,y)=>x-y));
+function pct(arr, x){                       // mid-rank percentile, 0..100
+  let lo = 0, hi = arr.length;
+  while (lo < hi){ const m = (lo+hi)>>1; if (arr[m] < x - 1e-12) lo = m+1; else hi = m; }
+  let up = lo; while (up < arr.length && Math.abs(arr[up]-x) < 1e-12) up++;
+  return 100 * (lo + (up-lo)/2) / arr.length;
+}
+
+/* ---------- sub-factor scores (0-10) with reasoning ---------- */
+function subScores(a, b, ind){
+  const A = C[a], B = C[b], I = IND[ind], out = {C:{},A:{},G:{},E:{}};
+
+  const k = kogutSingh(a,b), kp = pct(POOL.ks, k.ks);
+  const top2 = k.gaps.slice(0,2).map(g => `${HOFN[g.d]} ${g.a} vs ${g.b}`).join("; ");
+  let clusterNote = [a,b].filter(c => C[c].hofstede_cluster).map(c =>
+      `${C[c].name}'s ${C[c].hofstede_cluster.dims.map(d=>HOFN[d].toLowerCase()).join(", ")} use Hofstede's "${C[c].hofstede_cluster.label}" cluster`).join("; ");
+  out.C.values = {score: kp/10, raw: `Kogut–Singh ${fmt(k.ks,2)} over ${k.n} dims`,
+    text: `Kogut–Singh index ${fmt(k.ks,2)} across ${k.n} Hofstede dimensions, more distant than ${Math.round(kp)}% of pairs. Largest gaps: ${top2}.` + (clusterNote ? ` Note: ${clusterNote}.` : "")};
+
+  const prim = A.lang.filter(l => B.lang.includes(l));
+  let ls, lt;
+  if (prim.length){ ls = 0; lt = `Shared primary language (${prim.join(", ")}).`; }
+  else if (I.lang_basis === "audience"){
+    const sec = A.lang.filter(l => B.lang2.includes(l));
+    ls = sec.length ? 6 : 10;
+    lt = `Primary languages differ (${A.lang.join("/")} vs ${B.lang.join("/")}).` + (sec.length
+      ? ` ${sec.join(", ")} is widely used in ${B.name} as a second or business language, but this industry sells to a mass audience, so content still needs localizing.`
+      : ` The home language is not widely used in ${B.name}.`);
+  } else {
+    const all = l => l.lang.concat(l.lang2), any = all(A).filter(l => all(B).includes(l));
+    ls = any.length ? 3 : 8;
+    lt = `Primary languages differ (${A.lang.join("/")} vs ${B.lang.join("/")}).` + (any.length
+      ? ` ${any.join(", ")} is a shared working language, which is enough for B2B.` : " No shared working language.");
+  }
+  out.C.language = {score: ls, raw: `${A.lang[0]} → ${B.lang[0]}`, text: lt};
+
+  const ra = A.religion, rb = B.religion;
+  const rs = ra === rb ? 0 : (ra === "Mixed" || rb === "Mixed") ? 5 : (ra === "Unaffiliated" || rb === "Unaffiliated") ? 6 : 10;
+  out.C.religion = {score: rs, raw: `${ra} vs ${rb}`, text: ra === rb ? `Same majority religious affiliation (${ra}).`
+    : `Majority religious affiliation differs: ${ra} (${A.name}) vs ${rb} (${B.name}).`};
+
+  const ag = sharedAgreement(a,b);
+  out.A.trade = {score: ag ? 0 : 10, raw: ag || "none", text: ag ? `Covered by a trade agreement in force (${ag}).`
+    : `No free-trade agreement or customs union between ${A.name} and ${B.name}; trade runs on WTO most-favored-nation terms.`};
+  const sn = DATA.trade.sanctions[key(a,b)];
+  out.A.sanctions = {score: sn ? sn.score : 0, raw: sn ? sn.note : "none",
+    text: sn ? `${sn.note}.` : `No comprehensive sanctions or country-wide export-control regime between the two.`};
+  const gg = Math.abs(gov(a)-gov(b)), gp = pct(POOL.gov, gg);
+  out.A.governance = {score: gp/10, raw: `${fmt(gov(a),2)} vs ${fmt(gov(b),2)}`,
+    text: `Average of WGI Control of Corruption and Regulatory Quality: ${fmt(gov(a),2)} (${A.name}) vs ${fmt(gov(b),2)} (${B.name}) on the −2.5…+2.5 scale. The gap is larger than ${Math.round(gp)}% of pairs.`};
+  const va = wgi(a,"voice"), vb = wgi(b,"voice"), vp = pct(POOL.voice, Math.abs(va-vb));
+  out.A.voice = {score: vp/10, raw: `${fmt(va,2)} vs ${fmt(vb,2)}`,
+    text: `WGI Voice & Accountability (press freedom, political openness): ${fmt(va,2)} vs ${fmt(vb,2)}. The gap is larger than ${Math.round(vp)}% of pairs.`};
+  const LEGALN = {common:"common law", civil:"civil law", muslim:"Muslim law", mixed:"mixed system"};
+  const la = LEGALN[A.legal], lb = LEGALN[B.legal], lgs = A.legal === B.legal ? 0 : (A.legal === "mixed" || B.legal === "mixed") ? 5 : 10;
+  out.A.legal = {score: lgs, raw: `${la} vs ${lb}`, text: la === lb ? `Same legal family (${la}).` : `Different legal families: ${la} vs ${lb}.`};
+
+  const d = km(a,b), dp = pct(POOL.km, d);
+  out.G.distance = {score: dp/10, raw: `${Math.round(d).toLocaleString()} km`,
+    text: `${A.capital} to ${B.capital}: ${Math.round(d).toLocaleString()} km great-circle, farther than ${Math.round(dp)}% of pairs.`};
+  const tz = tzGap(a,b);
+  out.G.timezone = {score: tz/12*10, raw: `${fmt(tz,1)} h`,
+    text: `${fmt(tz,1)}-hour gap between capitals (standard time). 12 hours scores 10.`};
+  const br = BORDER.has(key(a,b));
+  out.G.border = {score: br ? 0 : 10, raw: br ? "yes" : "no", text: br ? "The countries share a land border." : "No shared land border."};
+  const lpi = B.wb.lpi.value;
+  out.G.logistics = {score: clamp((4.3-lpi)/1.8,0,1)*10, raw: `LPI ${fmt(lpi,1)}`,
+    text: `${B.name} Logistics Performance Index ${fmt(lpi,1)}/5 (home ${fmt(A.wb.lpi.value,1)}). 4.3 or better scores 0, 2.5 scores 10.`};
+  const net = B.wb.internet.value;
+  out.G.digital = {score: clamp((100-net)/60,0,1)*10, raw: `${Math.round(net)}% online`,
+    text: `${Math.round(net)}% of ${B.name}'s population uses the internet (${B.wb.internet.year}); home ${Math.round(A.wb.internet.value)}%.`};
+
+  const ig = incGap(a,b), ip = pct(POOL.inc, ig), ratio = Math.exp(ig);
+  const richer = A.wb.gdp_pc.value > B.wb.gdp_pc.value ? A.name : B.name;
+  out.E.income = {score: ip/10, raw: `${fmt(ratio,1)}× GDP/cap`,
+    text: `GDP per capita ${money(A.wb.gdp_pc.value)} (${A.name}) vs ${money(B.wb.gdp_pc.value)} (${B.name}), ${A.wb.gdp_pc.year}: ${richer} is ${fmt(ratio,1)}× richer per person, a wider gap than ${Math.round(ip)}% of pairs. ${B.name}'s economy: $${fmt(B.wb.gdp.value/1e12,2)} trillion.`};
+  return out;
+}
+function dimScores(a, b, ind){
+  const s = subScores(a,b,ind), sub = IND[ind].sub, r = {};
+  DIMS.forEach(d => r[d] = Object.entries(sub[d]).reduce((t,[k,w]) => t + w*s[d][k].score, 0));
+  return {dims: r, subs: s};
+}
+
+/* all-pair dimension scores per industry (cached) for total-distance percentile */
+const ALLCACHE = {};
+function allDims(ind){
+  if (!ALLCACHE[ind]) ALLCACHE[ind] = PAIRS.map(([a,b]) => dimScores(a,b,ind).dims);
+  return ALLCACHE[ind];
+}
+const total = (dims, w) => DIMS.reduce((t,d) => t + w[d]*dims[d], 0) / DIMS.reduce((t,d)=>t+w[d],0);
+function totalPct(ind, w, x){ return pct(allDims(ind).map(d => total(d,w)).sort((p,q)=>p-q), x); }
+function band(p){
+  if (p >= 75) return {name:"High", c:"var(--high)", rec:"Distance is a first-order risk. Do not transplant the home playbook: enter through a local partner, licensing or joint venture, or a narrowly scoped pilot, and budget for heavy adaptation."};
+  if (p >= 50) return {name:"Significant", c:"var(--sig)", rec:"Expect the home model to need real adaptation in the flagged dimension. Staged entry or a local partner is prudent."};
+  if (p >= 25) return {name:"Moderate", c:"var(--mod)", rec:"Manageable with targeted adaptation in the flagged dimension; standard entry diligence otherwise."};
+  return {name:"Low", c:"var(--low)", rec:"Distance is unlikely to be the binding constraint; competitive dynamics matter more than CAGE friction."};
+}
+const topDim = (dims, w) => DIMS.reduce((best,d) => w[d]*dims[d] > w[best]*dims[best] ? d : best, "C");
+function topSub(subs, ind, d){
+  return Object.entries(IND[ind].sub[d]).reduce((best,[k,w]) => (!best || w*subs[d][k].score > best.v) ? {k, v:w*subs[d][k].score} : best, null).k;
+}
+
+/* risk language per driver */
+function riskText(k, a, b, ind, s){
+  const A = C[a].name, B = C[b].name, media = ind === "live_sports_media" || ind === "film_tv";
+  const T = {
+    values: `Values distance: ${s.C.values.text.split(". Largest")[1] ? "largest gaps in" + s.C.values.text.split("Largest gaps:")[1].split(".")[0] : ""}. Plan for local leadership and local creative decisions rather than a transplanted ${A} playbook.`,
+    language: media ? `Language: the ${B} audience consumes sport in ${C[b].lang[0]}. Budget for native-language commentary, marketing and talent from day one; English-only feeds will reach only expatriates and an elite slice of the market.`
+                    : `Language: ${C[a].lang[0]} vs ${C[b].lang[0]}. Localization of product, sales and support is a fixed cost of entry.`,
+    religion: media ? `Religious and social norms (${C[a].religion} vs ${C[b].religion}): screen sponsorship categories (alcohol, betting), on-air content and scheduling (e.g. Ramadan) against local norms before launch.`
+                    : `Religious norms (${C[a].religion} vs ${C[b].religion}): review product content, marketing imagery and scheduling against local norms.`,
+    trade: `No trade agreement between ${A} and ${B}: no treaty-guaranteed market access or investor protection beyond WTO defaults.`,
+    sanctions: `Sanctions and export controls (${s.A.sanctions.raw}): legal clearance is a gating item and can end the venture overnight.`,
+    governance: `Institutional gap (WGI ${s.A.governance.raw}): approvals and contract enforcement may run through relationships and state discretion.`,
+    voice: media ? `Media and political openness (WGI Voice & Accountability ${s.A.voice.raw}): content is licensed and supervised by the state in ${B}, and partnering with state-linked entities brings reputational and political scrutiny back home.`
+                 : `Political openness gap (WGI Voice & Accountability ${s.A.voice.raw}): expect state influence over operations and reputational exposure at home.`,
+    legal: `Different legal families (${s.A.legal.raw}): contracts, dispute resolution and IP protection will not work as they do at home.`,
+    distance: `Physical distance (${s.G.distance.raw}) raises the cost of moving goods, people and management attention.`,
+    timezone: media ? `Time zones (${s.G.timezone.raw}): live events in one market air at off-peak hours in the other, which erodes the value of live rights in both directions.`
+                    : `Time-zone gap (${s.G.timezone.raw}) complicates coordination, support and real-time operations.`,
+    border: `No land border: everything moves by sea or air.`,
+    logistics: `Weak logistics (${s.G.logistics.raw}): budget for supply-chain friction and inventory buffers.`,
+    digital: `Limited digital reach (${s.G.digital.raw}): the addressable online audience is smaller than population suggests.`,
+    income: `Income gap (${s.E.income.raw}): pricing, product mix and willingness to pay will differ sharply from home.`,
+  };
+  return T[k];
+}
+
+/* ---------- UI ---------- */
+const $ = id => document.getElementById(id);
+const state = {home:"USA", target:"SAU", ind:"live_sports_media", w:null};
+function readHash(){
+  const h = new URLSearchParams(location.hash.slice(1));
+  if (C[h.get("home")]) state.home = h.get("home");
+  if (C[h.get("target")]) state.target = h.get("target");
+  if (IND[h.get("ind")]) state.ind = h.get("ind");
+  const w = (h.get("w")||"").split(",").map(Number);
+  state.w = w.length === 4 && w.every(x => x >= 0) && w.some(x => x > 0) ? Object.fromEntries(DIMS.map((d,i)=>[d,w[i]])) : null;
+}
+function writeHash(){
+  const p = new URLSearchParams({home:state.home, target:state.target, ind:state.ind});
+  if (state.w) p.set("w", DIMS.map(d=>state.w[d]).join(","));
+  history.replaceState(null, "", "#" + p);
+}
+const weights = () => state.w || IND[state.ind].weights;
+const norm = w => { const t = DIMS.reduce((s,d)=>s+w[d],0); return Object.fromEntries(DIMS.map(d=>[d, 100*w[d]/t])); };
+
+function fillSelects(){
+  const opts = ISO.slice().sort((x,y)=>C[x].name.localeCompare(C[y].name)).map(c => `<option value="${c}">${C[c].name}</option>`).join("");
+  $("home").innerHTML = opts; $("target").innerHTML = opts;
+  $("industry").innerHTML = Object.entries(IND).map(([k,v]) => `<option value="${k}">${v.name}</option>`).join("");
+  $("sliders").innerHTML = DIMS.map(d => `<div><label for="w${d}" style="color:var(--${d})">${DIMN[d]} <span id="wv${d}"></span></label><input type="range" id="w${d}" min="0" max="100" step="1"></div>`).join("");
+}
+function shifted(w, d, delta){                  // move one weight, rescale the others to keep 100
+  const n = norm(w), nv = clamp(n[d]+delta, 0, 100), rest = 100 - n[d];
+  return Object.fromEntries(DIMS.map(x => [x, x === d ? nv : rest > 0 ? n[x]*(100-nv)/rest : (100-nv)/3]));
+}
+
+function render(){
+  const {home:a, target:b, ind} = state;
+  $("home").value = a; $("target").value = b; $("industry").value = ind;
+  if (a === b){ $("verdict").innerHTML = `<div class="panel" style="margin-top:16px">Pick two different countries.</div>`; return; }
+  const I = IND[ind], w = norm(weights()), {dims, subs} = dimScores(a,b,ind);
+  const tot = total(dims, w), tp = totalPct(ind, w, tot), bd = band(tp);
+  const td = topDim(dims, w), ts = topSub(subs, ind, td);
+  const low = DIMS.reduce((m,d) => dims[d] < dims[m] ? d : m, "C");
+  const custom = !!state.w;
+
+  $("verdict").innerHTML = `<div class="panel verdict">
+    <div><div class="muted small">Total CAGE distance</div><div class="big">${fmt(tot)}<span class="muted" style="font-size:20px">/10</span></div>
+      <span class="band" style="background:${bd.c}">${bd.name}</span><div class="muted small" style="margin-top:6px">More distant than ${Math.round(tp)}% of the 2,070 country pairs in the tool under the same weights${custom ? " (custom weights)" : ""}.</div></div>
+    <div>
+      <h3>Recommendation: ${C[a].name} → ${C[b].name}, ${I.name.toLowerCase()}</h3>
+      ${DIMS.map(d => `<div class="dimbar"><span style="color:var(--${d});font-weight:600">${DIMN[d]}</span><div class="track"><div class="fill" style="width:${dims[d]*10}%;background:var(--${d})"></div></div><span class="num">${fmt(dims[d])} <span class="muted small">×${Math.round(w[d])}%</span></span></div>`).join("")}
+      <p><b>How significant is the total distance?</b> ${bd.name}. ${bd.rec}</p>
+      <p><b>What to be most cautious about:</b> ${DIMN[td]} distance contributes the most to the weighted total (${fmt(w[td]*dims[td]/100,2)} of ${fmt(tot,2)} points), driven mainly by <i>${SUBN[ts].toLowerCase()}</i>.</p>
+      <div class="risk"><b>Single largest risk for leadership:</b> ${riskText(ts, a, b, ind, subs)}</div>
+      <p class="small muted" style="margin-top:8px">Lowest-distance dimension: ${DIMN[low]} (${fmt(dims[low])}/10). Least likely to cause trouble.</p>
+    </div></div>`;
+
+  const notes = DATA.pair_notes[a+"-"+b] || DATA.pair_notes[b+"-"+a] || {};
+  $("cards").innerHTML = DIMS.map(d => {
+    const subsHtml = Object.entries(I.sub[d]).map(([k,sw]) => `<tr><td>${SUBN[k]}</td><td class="small">${subs[d][k].raw}</td><td class="num">${fmt(subs[d][k].score)}</td><td class="num">${Math.round(sw*100)}%</td></tr>`).join("");
+    const reasons = Object.entries(I.sub[d]).filter(([,sw]) => sw > 0).sort((x,y)=>y[1]-x[1]).map(([k]) => `<p class="small"><b>${SUBN[k]}:</b> ${subs[d][k].text} <span class="muted">[${SUBSRC[k].map(srcNum).join(", ")}]</span></p>`).join("");
+    const srcs = [...new Set(Object.keys(I.sub[d]).flatMap(k => SUBSRC[k]))];
+    return `<div class="panel card" style="border-top-color:var(--${d})">
+      <div class="head"><h3 style="color:var(--${d})">${DIMN[d]}</h3><span><span class="score">${fmt(dims[d])}</span><span class="muted">/10 · weight ${Math.round(w[d])}%</span></span></div>
+      <table><tr><th>Sub-factor</th><th>Data</th><th class="num">Score</th><th class="num">Sub-wt</th></tr>${subsHtml}</table>
+      ${reasons}
+      <div class="why"><b>Why this matters for ${I.name.toLowerCase()}:</b> ${I.why[d]}</div>
+      ${(notes[d]||[]).map(n => `<p class="note">${n} <span class="muted">(context, not scored)</span></p>`).join("")}
+      <ol class="src">${srcs.map(s => `<li value="${srcNum(s)}"><a href="${DATA.sources[s].url}" target="_blank" rel="noopener">${DATA.sources[s].label}</a></li>`).join("")}</ol>
+    </div>`;
+  }).join("");
+
+  const iw = I.weights, nw = IND.neutral.weights;
+  $("weightwhy").innerHTML = `<h3>Weights for ${I.name.toLowerCase()}</h3>
+    <div class="tablewrap"><table><tr><th>Dimension</th><th class="num">Industry weight</th><th class="num">Equal-weight baseline</th><th>Justification</th></tr>
+    ${DIMS.map(d => `<tr><td style="color:var(--${d});font-weight:600">${DIMN[d]}</td><td class="num">${iw[d]}%</td><td class="num">${nw[d]}%</td><td class="small">${I.why[d]}</td></tr>`).join("")}</table></div>
+    <p class="small muted">${I.ghemawat} [${srcNum("ghemawat")}]. Sub-factor weights within each dimension also change by industry (shown in each card): for media, language and time zones dominate; for cement, physical distance does.</p>`;
+  DIMS.forEach(d => { $("w"+d).value = Math.round(weights()[d]); $("wv"+d).textContent = Math.round(w[d]) + "%"; });
+  $("wnote").textContent = custom ? "Custom weights active. The shareable link in the address bar includes them." : "";
+
+  const row = (label, ww) => { const t = total(dims, ww), p = totalPct(ind, ww, t), bb = band(p), dd = topDim(dims, ww);
+    return {label, t, p, bb, dd, html:`<td>${label}</td><td class="num">${fmt(t,2)}</td><td class="num">${Math.round(p)}</td><td><span class="pill" style="background:${bb.c}">${bb.name}</span></td><td>${DIMN[dd]}</td>`}; };
+  const baseRow = row("Current weights", w);
+  let oat = `<table><tr><th>Scenario</th><th class="num">Total</th><th class="num">Pctile</th><th>Band</th><th>Top caution</th></tr><tr>${baseRow.html}</tr>`;
+  DIMS.forEach(d => [-20,-10,10,20].forEach(dl => {
+    const r = row(`${DIMN[d]} ${dl>0?"+":""}${dl}`, shifted(w, d, dl));
+    const flag = (r.bb.name !== bd.name || r.dd !== td) ? ` style="background:var(--soft)"` : "";
+    oat += `<tr${flag}>${r.html}</tr>`;
+  }));
+  $("oat").innerHTML = oat + `</table><p class="small muted">Shaded rows change the band or the top caution.</p>`;
+
+  let tip = `<table><tr><th>Weight</th><th class="num">Now</th><th class="num">Band holds</th><th class="num">Top caution holds</th></tr>`;
+  const flips = [];
+  DIMS.forEach(d => {
+    let bandR = [null,null], topR = [null,null];
+    for (let v = 0; v <= 100; v++){
+      const ww = shifted(w, d, v - w[d]), t = total(dims, ww);
+      if (band(totalPct(ind, ww, t)).name === bd.name){ if (bandR[0] === null) bandR[0] = v; bandR[1] = v; }
+      if (topDim(dims, ww) === td){ if (topR[0] === null) topR[0] = v; topR[1] = v; }
+    }
+    const rng = r => r[0] === null ? "never" : `${r[0]}–${r[1]}%`;
+    tip += `<tr><td style="color:var(--${d});font-weight:600">${DIMN[d]}</td><td class="num">${Math.round(w[d])}%</td><td class="num">${rng(bandR)}</td><td class="num">${rng(topR)}</td></tr>`;
+    if (topR[0] !== null && (topR[0] > 0 || topR[1] < 100)) flips.push(`${DIMN[d]} ${topR[0] > 0 && w[d] - topR[0] < (topR[1] < 100 ? topR[1] - w[d] : 1e9) ? "below " + topR[0] : "above " + topR[1]}%`);
+  });
+  $("tip").innerHTML = tip + `</table><p class="small">Ranges are approximate (scanned in 1-point steps); the other weights rescale proportionally. ${flips.length ? `The nearest flips in top caution come from moving ${flips.join(", ")}.` : ""}</p>`;
+
+  let pr = `<table><tr><th>Weight set</th><th class="num">C/A/G/E</th><th class="num">Total</th><th class="num">Pctile</th><th>Band</th><th>Top caution</th></tr>`;
+  Object.entries(IND).forEach(([k,v]) => {
+    const ww = v.weights, t = total(dims, ww), p = totalPct(ind, ww, t), bb = band(p), dd = topDim(dims, ww);
+    pr += `<tr${k === ind ? ' style="font-weight:600"' : ""}><td>${v.name}</td><td class="num">${DIMS.map(d=>ww[d]).join("/")}</td><td class="num">${fmt(t,2)}</td><td class="num">${Math.round(p)}</td><td><span class="pill" style="background:${bb.c}">${bb.name}</span></td><td>${DIMN[dd]}</td></tr>`;
+  });
+  const single = DIMS.map(d => `${DIMN[d]}-only ${fmt(dims[d])}`).join(" · ");
+  $("presets").innerHTML = pr + `</table><p class="small muted">Extremes (100% on one dimension): ${single}.</p>`;
+}
+
+function renderStatic(){
+  $("method").innerHTML = `
+  <p><b>Scale.</b> Every sub-factor is scored 0–10. Continuous measures (Kogut–Singh cultural index, governance gap, voice gap, distance, income gap) are scored by <b>percentile rank among all 2,070 ordered pairs</b> of the 46 countries, so the scores are relative to the world's typical pair rather than set by arbitrary cut-offs. The total uses the same idea: its band (Low &lt;25th, Moderate 25–50th, Significant 50–75th, High ≥75th percentile) is the pair's rank among all pairs under the same weights.</p>
+  <p><b>Cultural.</b> Kogut &amp; Singh (1988) index over Hofstede's six dimensions: the mean of squared gaps, each divided by that dimension's variance across all countries in the Hofstede dataset [${srcNum("kogut_singh")}, ${srcNum("hofstede")}]. Where Hofstede has no country score, his regional cluster is used and flagged. Language: 0 for a shared primary language. For audience-facing industries, 6 if the home language is a widely used second language in the target, otherwise 10. For B2B industries, 3 if there is any shared working language, otherwise 8. Religion: 0 for the same majority affiliation, 5 if either country is religiously mixed, 6 if either is majority unaffiliated, otherwise 10.</p>
+  <p><b>Administrative.</b> Trade agreement 0/10 (shared FTA or customs union in force; table as of Nov 2026). Sanctions 0–10 from a hand-coded table (Russia–sanctioning coalition 10, U.S.–China 7, targeted chip controls 3). Governance gap = |Δ mean(Control of Corruption, Regulatory Quality)|, and media openness = |Δ Voice &amp; Accountability|, both from WGI. Legal family 0/5/10 (same / one mixed / different).</p>
+  <p><b>Geographic.</b> Great-circle distance between capitals (percentile). Time zones: hours apart at standard time ÷ 12 × 10. Shared land border 0/10. Logistics: target LPI, 4.3→0 to 2.5→10. Digital reach: target internet use, 100%→0 to 40%→10.</p>
+  <p><b>Economic.</b> |ln(GDP per capita ratio)|, percentile. A 2× gap counts the same whether the target is richer or poorer. The reasoning text says which direction.</p>
+  <p><b>Weights.</b> Dimension weights and sub-factor weights are set per industry using Ghemawat's industry sensitivities [${srcNum("ghemawat")}]. They are judgment, not estimates, which is why Section 3 shows how the result moves when they change.</p>
+  <p><b>Limits, stated plainly.</b> (1) Country-level averages hide regions (Riyadh vs rural Saudi Arabia; U.S. time zones span 6 hours, and the tool uses the capital). (2) Hofstede's data is decades old, and regional-cluster stand-ins (e.g. Saudi Arabia) are approximations. (3) The trade-agreement and sanctions tables are hand-coded and should be checked against the WTO RTA database before relying on them. (4) Bilateral ties that matter (security partnerships, diaspora, colonial history) are not scored. (5) Percentile scoring means a score describes the pair relative to the 46 countries chosen, not the whole world. (6) The tool knows nothing about the firm: brand, partners, capabilities and deal terms can outweigh any distance.</p>`;
+  $("sources").innerHTML = SRCKEYS.map(k => `<li><a href="${DATA.sources[k].url}" target="_blank" rel="noopener">${DATA.sources[k].label}</a>${DATA.sources[k].dim !== "-" ? ` <span class="muted">(${DIMN[DATA.sources[k].dim]})</span>` : ""}</li>`).join("");
+}
+
+fillSelects(); readHash(); renderStatic(); render();
+["home","target","industry"].forEach(id => $(id).addEventListener("change", e => {
+  state[{home:"home",target:"target",industry:"ind"}[id]] = e.target.value;
+  if (id === "industry") state.w = null;
+  writeHash(); render();
+}));
+DIMS.forEach(d => $("w"+d).addEventListener("input", () => {
+  state.w = Object.fromEntries(DIMS.map(x => [x, Number($("w"+x).value)]));
+  if (!DIMS.some(x => state.w[x] > 0)) state.w = null;
+  writeHash(); render();
+}));
+$("reset").addEventListener("click", () => { state.w = null; writeHash(); render(); });
+$("print").addEventListener("click", () => window.print());
+</script>
+</body>
+</html>

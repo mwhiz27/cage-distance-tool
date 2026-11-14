@@ -1,0 +1,371 @@
+{
+ "live_sports_media": {
+  "name": "Live sports media (broadcast & streaming rights)",
+  "weights": {
+   "C": 30,
+   "A": 30,
+   "G": 25,
+   "E": 15
+  },
+  "lang_basis": "audience",
+  "sub": {
+   "C": {
+    "values": 0.25,
+    "language": 0.45,
+    "religion": 0.3
+   },
+   "A": {
+    "trade": 0.05,
+    "sanctions": 0.2,
+    "governance": 0.25,
+    "voice": 0.4,
+    "legal": 0.1
+   },
+   "G": {
+    "distance": 0.1,
+    "timezone": 0.55,
+    "border": 0.05,
+    "logistics": 0,
+    "digital": 0.3
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "The product is commentary, storytelling and fandom. Ghemawat flags products with high linguistic content (TV programming) as most sensitive to cultural distance, and sports add religious and social norms: which sponsors are allowed, what can be shown, when people watch (e.g., Ramadan schedules).",
+   "A": "Broadcasting is one of the most government-involved industries: content licensing, state ownership of broadcasters and sports properties, and political scrutiny of cross-border sports deals. Media openness (WGI Voice & Accountability) gets the largest sub-weight because it proxies how freely content can be distributed.",
+   "G": "Digital content is weightless, so physical distance and logistics barely matter. Time zones are the exception: live rights lose most of their value when the event airs while the audience sleeps or works. Communication infrastructure (internet penetration) determines streaming reach.",
+   "E": "Income gaps matter less than for physical goods because rights are priced to each market's ad and subscription economics, but willingness to pay still sets the size of the prize. Lowest weight."
+  },
+  "ghemawat": "Ghemawat (2001) lists media among industries most sensitive to cultural and administrative distance, and least to geographic distance."
+ },
+ "film_tv": {
+  "name": "Film, TV & publishing (non-live content)",
+  "weights": {
+   "C": 40,
+   "A": 30,
+   "G": 10,
+   "E": 20
+  },
+  "lang_basis": "audience",
+  "sub": {
+   "C": {
+    "values": 0.3,
+    "language": 0.5,
+    "religion": 0.2
+   },
+   "A": {
+    "trade": 0.05,
+    "sanctions": 0.15,
+    "governance": 0.25,
+    "voice": 0.4,
+    "legal": 0.15
+   },
+   "G": {
+    "distance": 0.2,
+    "timezone": 0.1,
+    "border": 0.1,
+    "logistics": 0,
+    "digital": 0.6
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Highest linguistic content of any product; dubbing, subtitles and local taste drive success.",
+   "A": "Content quotas, censorship and state broadcasters make media heavily regulated.",
+   "G": "Weightless product; only digital reach matters. Unlike live sports, content can be time-shifted, so time zones barely count.",
+   "E": "Pricing tiers adjust to income, but the size of the paying audience still varies with wealth."
+  },
+  "ghemawat": "Ghemawat: products with high linguistic content are most sensitive to cultural distance."
+ },
+ "software_saas": {
+  "name": "Software / SaaS (B2B)",
+  "weights": {
+   "C": 20,
+   "A": 40,
+   "G": 10,
+   "E": 30
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.4,
+    "language": 0.5,
+    "religion": 0.1
+   },
+   "A": {
+    "trade": 0.1,
+    "sanctions": 0.25,
+    "governance": 0.25,
+    "voice": 0.25,
+    "legal": 0.15
+   },
+   "G": {
+    "distance": 0.1,
+    "timezone": 0.4,
+    "border": 0,
+    "logistics": 0,
+    "digital": 0.5
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Interface localization and sales culture matter, but B2B buyers often work in English.",
+   "A": "Data-localization, privacy law and export controls are the main barriers.",
+   "G": "Weightless; time zones affect support and sales coverage; internet reach sets the addressable market.",
+   "E": "Enterprise budgets and labor costs scale with income; a big income gap means different price points."
+  },
+  "ghemawat": "Ghemawat: services with heavy government involvement are sensitive to administrative distance."
+ },
+ "consumer_food": {
+  "name": "Packaged food & consumer goods",
+  "weights": {
+   "C": 35,
+   "A": 20,
+   "G": 20,
+   "E": 25
+  },
+  "lang_basis": "audience",
+  "sub": {
+   "C": {
+    "values": 0.4,
+    "language": 0.3,
+    "religion": 0.3
+   },
+   "A": {
+    "trade": 0.4,
+    "sanctions": 0.15,
+    "governance": 0.25,
+    "voice": 0.05,
+    "legal": 0.15
+   },
+   "G": {
+    "distance": 0.35,
+    "timezone": 0,
+    "border": 0.15,
+    "logistics": 0.5,
+    "digital": 0
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Tastes, religion (halal, alcohol, pork) and packaging language decide whether a product sells.",
+   "A": "Tariffs, labelling and food-safety rules apply at the border.",
+   "G": "Bulky, perishable goods are sensitive to distance and logistics quality.",
+   "E": "Price points and pack sizes must match household income."
+  },
+  "ghemawat": "Ghemawat: products with country-specific quality standards and tastes (food) are culturally sensitive."
+ },
+ "luxury": {
+  "name": "Luxury & premium apparel",
+  "weights": {
+   "C": 20,
+   "A": 15,
+   "G": 15,
+   "E": 50
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.5,
+    "language": 0.2,
+    "religion": 0.3
+   },
+   "A": {
+    "trade": 0.4,
+    "sanctions": 0.2,
+    "governance": 0.2,
+    "voice": 0,
+    "legal": 0.2
+   },
+   "G": {
+    "distance": 0.3,
+    "timezone": 0,
+    "border": 0.1,
+    "logistics": 0.6,
+    "digital": 0
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Brand meaning travels, but values (status display, modesty norms) shape demand.",
+   "A": "Import duties and counterfeit enforcement matter.",
+   "G": "High value-to-weight; logistics quality matters more than distance.",
+   "E": "Demand depends almost entirely on the size of the wealthy consumer base. Highest economic weight."
+  },
+  "ghemawat": "Ghemawat: economic distance dominates where demand varies with income."
+ },
+ "auto_mfg": {
+  "name": "Automotive & industrial manufacturing",
+  "weights": {
+   "C": 15,
+   "A": 30,
+   "G": 30,
+   "E": 25
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.6,
+    "language": 0.3,
+    "religion": 0.1
+   },
+   "A": {
+    "trade": 0.45,
+    "sanctions": 0.2,
+    "governance": 0.2,
+    "voice": 0,
+    "legal": 0.15
+   },
+   "G": {
+    "distance": 0.4,
+    "timezone": 0.05,
+    "border": 0.2,
+    "logistics": 0.35,
+    "digital": 0
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Mostly B2B supply chains; cultural fit matters for management, not the product.",
+   "A": "Tariffs, local-content rules and national-champion protection.",
+   "G": "Heavy components and just-in-time supply chains punish distance.",
+   "E": "Labor-cost arbitrage and buyer income both scale with income gaps."
+  },
+  "ghemawat": "Ghemawat: heavy, bulky products and vertically integrated supply chains are sensitive to geographic distance."
+ },
+ "financial": {
+  "name": "Banking & financial services",
+  "weights": {
+   "C": 20,
+   "A": 50,
+   "G": 5,
+   "E": 25
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.6,
+    "language": 0.3,
+    "religion": 0.1
+   },
+   "A": {
+    "trade": 0.15,
+    "sanctions": 0.3,
+    "governance": 0.3,
+    "voice": 0.05,
+    "legal": 0.2
+   },
+   "G": {
+    "distance": 0.2,
+    "timezone": 0.5,
+    "border": 0.1,
+    "logistics": 0,
+    "digital": 0.2
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Trust and relationship norms matter for retail; less for wholesale.",
+   "A": "Licensing, capital rules, sanctions compliance and legal-system compatibility dominate. Highest administrative weight.",
+   "G": "Weightless; time zones matter for trading and settlement.",
+   "E": "Product mix and credit risk vary with income."
+  },
+  "ghemawat": "Ghemawat: regulated, strategically sensitive sectors face the most administrative distance."
+ },
+ "cement": {
+  "name": "Cement & building materials",
+  "weights": {
+   "C": 5,
+   "A": 25,
+   "G": 55,
+   "E": 15
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.6,
+    "language": 0.2,
+    "religion": 0.2
+   },
+   "A": {
+    "trade": 0.35,
+    "sanctions": 0.2,
+    "governance": 0.3,
+    "voice": 0.05,
+    "legal": 0.1
+   },
+   "G": {
+    "distance": 0.55,
+    "timezone": 0,
+    "border": 0.2,
+    "logistics": 0.25,
+    "digital": 0
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Cement has almost no cultural content. Language barriers matter little for cement (the assignment's own example).",
+   "A": "Construction is government-heavy (permits, public procurement, tariffs).",
+   "G": "Low value-to-weight; transport cost makes distance the deciding factor. Highest geographic weight.",
+   "E": "Construction demand tracks income, but cement is a necessity."
+  },
+  "ghemawat": "Ghemawat: products with a low value-to-weight ratio (cement) are most sensitive to geographic distance."
+ },
+ "neutral": {
+  "name": "Industry-neutral baseline (equal weights)",
+  "weights": {
+   "C": 25,
+   "A": 25,
+   "G": 25,
+   "E": 25
+  },
+  "lang_basis": "business",
+  "sub": {
+   "C": {
+    "values": 0.5,
+    "language": 0.3,
+    "religion": 0.2
+   },
+   "A": {
+    "trade": 0.25,
+    "sanctions": 0.2,
+    "governance": 0.25,
+    "voice": 0.1,
+    "legal": 0.2
+   },
+   "G": {
+    "distance": 0.4,
+    "timezone": 0.15,
+    "border": 0.15,
+    "logistics": 0.15,
+    "digital": 0.15
+   },
+   "E": {
+    "income": 1.0
+   }
+  },
+  "why": {
+   "C": "Equal weight: no industry assumption.",
+   "A": "Equal weight: no industry assumption.",
+   "G": "Equal weight: no industry assumption.",
+   "E": "Equal weight: no industry assumption."
+  },
+  "ghemawat": "Equal weights for comparison only. Ghemawat argues against using them."
+ }
+}

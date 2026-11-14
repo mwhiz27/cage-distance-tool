@@ -1,0 +1,755 @@
+{
+ "USA": {
+  "name": "United States",
+  "capital": "Washington, D.C.",
+  "lat": 38.9,
+  "lon": -77.04,
+  "utc": -5.0,
+  "lang": [
+   "English"
+  ],
+  "lang2": [
+   "Spanish"
+  ],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "USA",
+  "hof_fallback": null
+ },
+ "CAN": {
+  "name": "Canada",
+  "capital": "Ottawa",
+  "lat": 45.42,
+  "lon": -75.7,
+  "utc": -5.0,
+  "lang": [
+   "English",
+   "French"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "CAN",
+  "hof_fallback": null
+ },
+ "MEX": {
+  "name": "Mexico",
+  "capital": "Mexico City",
+  "lat": 19.43,
+  "lon": -99.13,
+  "utc": -6.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "MEX",
+  "hof_fallback": null
+ },
+ "BRA": {
+  "name": "Brazil",
+  "capital": "Brasília",
+  "lat": -15.79,
+  "lon": -47.88,
+  "utc": -3.0,
+  "lang": [
+   "Portuguese"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "BRA",
+  "hof_fallback": null
+ },
+ "ARG": {
+  "name": "Argentina",
+  "capital": "Buenos Aires",
+  "lat": -34.6,
+  "lon": -58.38,
+  "utc": -3.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "ARG",
+  "hof_fallback": null
+ },
+ "CHL": {
+  "name": "Chile",
+  "capital": "Santiago",
+  "lat": -33.45,
+  "lon": -70.67,
+  "utc": -4.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "CHL",
+  "hof_fallback": null
+ },
+ "COL": {
+  "name": "Colombia",
+  "capital": "Bogotá",
+  "lat": 4.71,
+  "lon": -74.07,
+  "utc": -5.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "COL",
+  "hof_fallback": null
+ },
+ "PER": {
+  "name": "Peru",
+  "capital": "Lima",
+  "lat": -12.05,
+  "lon": -77.04,
+  "utc": -5.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [
+   "Quechua"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "PER",
+  "hof_fallback": null
+ },
+ "GBR": {
+  "name": "United Kingdom",
+  "capital": "London",
+  "lat": 51.51,
+  "lon": -0.13,
+  "utc": 0.0,
+  "lang": [
+   "English"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "GBR",
+  "hof_fallback": null
+ },
+ "IRL": {
+  "name": "Ireland",
+  "capital": "Dublin",
+  "lat": 53.35,
+  "lon": -6.26,
+  "utc": 0.0,
+  "lang": [
+   "English"
+  ],
+  "lang2": [
+   "Irish"
+  ],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "IRE",
+  "hof_fallback": null
+ },
+ "FRA": {
+  "name": "France",
+  "capital": "Paris",
+  "lat": 48.86,
+  "lon": 2.35,
+  "utc": 1.0,
+  "lang": [
+   "French"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "FRA",
+  "hof_fallback": null
+ },
+ "DEU": {
+  "name": "Germany",
+  "capital": "Berlin",
+  "lat": 52.52,
+  "lon": 13.4,
+  "utc": 1.0,
+  "lang": [
+   "German"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "GER",
+  "hof_fallback": null
+ },
+ "ESP": {
+  "name": "Spain",
+  "capital": "Madrid",
+  "lat": 40.42,
+  "lon": -3.7,
+  "utc": 1.0,
+  "lang": [
+   "Spanish"
+  ],
+  "lang2": [
+   "Catalan"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "SPA",
+  "hof_fallback": null
+ },
+ "ITA": {
+  "name": "Italy",
+  "capital": "Rome",
+  "lat": 41.9,
+  "lon": 12.5,
+  "utc": 1.0,
+  "lang": [
+   "Italian"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "ITA",
+  "hof_fallback": null
+ },
+ "NLD": {
+  "name": "Netherlands",
+  "capital": "Amsterdam",
+  "lat": 52.37,
+  "lon": 4.9,
+  "utc": 1.0,
+  "lang": [
+   "Dutch"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Unaffiliated",
+  "legal": "civil",
+  "hof": "NET",
+  "hof_fallback": null
+ },
+ "BEL": {
+  "name": "Belgium",
+  "capital": "Brussels",
+  "lat": 50.85,
+  "lon": 4.35,
+  "utc": 1.0,
+  "lang": [
+   "Dutch",
+   "French"
+  ],
+  "lang2": [
+   "German",
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "BEL",
+  "hof_fallback": null
+ },
+ "AUT": {
+  "name": "Austria",
+  "capital": "Vienna",
+  "lat": 48.21,
+  "lon": 16.37,
+  "utc": 1.0,
+  "lang": [
+   "German"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "AUT",
+  "hof_fallback": null
+ },
+ "CHE": {
+  "name": "Switzerland",
+  "capital": "Bern",
+  "lat": 46.95,
+  "lon": 7.45,
+  "utc": 1.0,
+  "lang": [
+   "German",
+   "French",
+   "Italian"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "SWI",
+  "hof_fallback": null
+ },
+ "SWE": {
+  "name": "Sweden",
+  "capital": "Stockholm",
+  "lat": 59.33,
+  "lon": 18.07,
+  "utc": 1.0,
+  "lang": [
+   "Swedish"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "SWE",
+  "hof_fallback": null
+ },
+ "NOR": {
+  "name": "Norway",
+  "capital": "Oslo",
+  "lat": 59.91,
+  "lon": 10.75,
+  "utc": 1.0,
+  "lang": [
+   "Norwegian"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "NOR",
+  "hof_fallback": null
+ },
+ "DNK": {
+  "name": "Denmark",
+  "capital": "Copenhagen",
+  "lat": 55.68,
+  "lon": 12.57,
+  "utc": 1.0,
+  "lang": [
+   "Danish"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "DEN",
+  "hof_fallback": null
+ },
+ "POL": {
+  "name": "Poland",
+  "capital": "Warsaw",
+  "lat": 52.23,
+  "lon": 21.01,
+  "utc": 1.0,
+  "lang": [
+   "Polish"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "POL",
+  "hof_fallback": null
+ },
+ "PRT": {
+  "name": "Portugal",
+  "capital": "Lisbon",
+  "lat": 38.72,
+  "lon": -9.14,
+  "utc": 0.0,
+  "lang": [
+   "Portuguese"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "POR",
+  "hof_fallback": null
+ },
+ "RUS": {
+  "name": "Russia",
+  "capital": "Moscow",
+  "lat": 55.76,
+  "lon": 37.62,
+  "utc": 3.0,
+  "lang": [
+   "Russian"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "civil",
+  "hof": "RUS",
+  "hof_fallback": null
+ },
+ "TUR": {
+  "name": "Türkiye",
+  "capital": "Ankara",
+  "lat": 39.93,
+  "lon": 32.86,
+  "utc": 3.0,
+  "lang": [
+   "Turkish"
+  ],
+  "lang2": [],
+  "religion": "Muslim",
+  "legal": "civil",
+  "hof": "TUR",
+  "hof_fallback": null
+ },
+ "SAU": {
+  "name": "Saudi Arabia",
+  "capital": "Riyadh",
+  "lat": 24.71,
+  "lon": 46.68,
+  "utc": 3.0,
+  "lang": [
+   "Arabic"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Muslim",
+  "legal": "muslim",
+  "hof": "SAU",
+  "hof_fallback": "ARA"
+ },
+ "ARE": {
+  "name": "United Arab Emirates",
+  "capital": "Abu Dhabi",
+  "lat": 24.45,
+  "lon": 54.38,
+  "utc": 4.0,
+  "lang": [
+   "Arabic"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Muslim",
+  "legal": "muslim",
+  "hof": "ARA",
+  "hof_fallback": "ARA"
+ },
+ "QAT": {
+  "name": "Qatar",
+  "capital": "Doha",
+  "lat": 25.29,
+  "lon": 51.53,
+  "utc": 3.0,
+  "lang": [
+   "Arabic"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Muslim",
+  "legal": "muslim",
+  "hof": "ARA",
+  "hof_fallback": "ARA"
+ },
+ "EGY": {
+  "name": "Egypt",
+  "capital": "Cairo",
+  "lat": 30.04,
+  "lon": 31.24,
+  "utc": 2.0,
+  "lang": [
+   "Arabic"
+  ],
+  "lang2": [
+   "English"
+  ],
+  "religion": "Muslim",
+  "legal": "civil",
+  "hof": "EGY",
+  "hof_fallback": "ARA"
+ },
+ "MAR": {
+  "name": "Morocco",
+  "capital": "Rabat",
+  "lat": 34.02,
+  "lon": -6.84,
+  "utc": 1.0,
+  "lang": [
+   "Arabic",
+   "Tamazight"
+  ],
+  "lang2": [
+   "French"
+  ],
+  "religion": "Muslim",
+  "legal": "civil",
+  "hof": "MOR",
+  "hof_fallback": null
+ },
+ "ISR": {
+  "name": "Israel",
+  "capital": "Jerusalem",
+  "lat": 31.77,
+  "lon": 35.21,
+  "utc": 2.0,
+  "lang": [
+   "Hebrew"
+  ],
+  "lang2": [
+   "Arabic",
+   "English"
+  ],
+  "religion": "Jewish",
+  "legal": "mixed",
+  "hof": "ISR",
+  "hof_fallback": null
+ },
+ "ZAF": {
+  "name": "South Africa",
+  "capital": "Pretoria",
+  "lat": -25.75,
+  "lon": 28.19,
+  "utc": 2.0,
+  "lang": [
+   "English",
+   "Zulu",
+   "Xhosa",
+   "Afrikaans"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "mixed",
+  "hof": "SAF",
+  "hof_fallback": "SAW"
+ },
+ "NGA": {
+  "name": "Nigeria",
+  "capital": "Abuja",
+  "lat": 9.08,
+  "lon": 7.4,
+  "utc": 1.0,
+  "lang": [
+   "English"
+  ],
+  "lang2": [
+   "Hausa",
+   "Yoruba",
+   "Igbo"
+  ],
+  "religion": "Mixed",
+  "legal": "common",
+  "hof": "NIG",
+  "hof_fallback": "AFW"
+ },
+ "KEN": {
+  "name": "Kenya",
+  "capital": "Nairobi",
+  "lat": -1.29,
+  "lon": 36.82,
+  "utc": 3.0,
+  "lang": [
+   "English",
+   "Swahili"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "AFE",
+  "hof_fallback": "AFE"
+ },
+ "IND": {
+  "name": "India",
+  "capital": "New Delhi",
+  "lat": 28.61,
+  "lon": 77.21,
+  "utc": 5.5,
+  "lang": [
+   "Hindi",
+   "English"
+  ],
+  "lang2": [
+   "Bengali",
+   "Tamil",
+   "Telugu",
+   "Marathi"
+  ],
+  "religion": "Hindu",
+  "legal": "common",
+  "hof": "IND",
+  "hof_fallback": null
+ },
+ "CHN": {
+  "name": "China",
+  "capital": "Beijing",
+  "lat": 39.9,
+  "lon": 116.41,
+  "utc": 8.0,
+  "lang": [
+   "Mandarin"
+  ],
+  "lang2": [],
+  "religion": "Unaffiliated",
+  "legal": "civil",
+  "hof": "CHI",
+  "hof_fallback": null
+ },
+ "JPN": {
+  "name": "Japan",
+  "capital": "Tokyo",
+  "lat": 35.68,
+  "lon": 139.69,
+  "utc": 9.0,
+  "lang": [
+   "Japanese"
+  ],
+  "lang2": [],
+  "religion": "Unaffiliated",
+  "legal": "civil",
+  "hof": "JPN",
+  "hof_fallback": null
+ },
+ "KOR": {
+  "name": "South Korea",
+  "capital": "Seoul",
+  "lat": 37.57,
+  "lon": 126.98,
+  "utc": 9.0,
+  "lang": [
+   "Korean"
+  ],
+  "lang2": [],
+  "religion": "Unaffiliated",
+  "legal": "civil",
+  "hof": "KOR",
+  "hof_fallback": null
+ },
+ "SGP": {
+  "name": "Singapore",
+  "capital": "Singapore",
+  "lat": 1.35,
+  "lon": 103.82,
+  "utc": 8.0,
+  "lang": [
+   "English",
+   "Mandarin",
+   "Malay",
+   "Tamil"
+  ],
+  "lang2": [],
+  "religion": "Mixed",
+  "legal": "common",
+  "hof": "SIN",
+  "hof_fallback": null
+ },
+ "IDN": {
+  "name": "Indonesia",
+  "capital": "Jakarta",
+  "lat": -6.21,
+  "lon": 106.85,
+  "utc": 7.0,
+  "lang": [
+   "Indonesian"
+  ],
+  "lang2": [],
+  "religion": "Muslim",
+  "legal": "civil",
+  "hof": "IDO",
+  "hof_fallback": null
+ },
+ "VNM": {
+  "name": "Vietnam",
+  "capital": "Hanoi",
+  "lat": 21.03,
+  "lon": 105.85,
+  "utc": 7.0,
+  "lang": [
+   "Vietnamese"
+  ],
+  "lang2": [],
+  "religion": "Unaffiliated",
+  "legal": "civil",
+  "hof": "VIE",
+  "hof_fallback": null
+ },
+ "THA": {
+  "name": "Thailand",
+  "capital": "Bangkok",
+  "lat": 13.76,
+  "lon": 100.5,
+  "utc": 7.0,
+  "lang": [
+   "Thai"
+  ],
+  "lang2": [],
+  "religion": "Buddhist",
+  "legal": "civil",
+  "hof": "THA",
+  "hof_fallback": null
+ },
+ "PHL": {
+  "name": "Philippines",
+  "capital": "Manila",
+  "lat": 14.6,
+  "lon": 120.98,
+  "utc": 8.0,
+  "lang": [
+   "Filipino",
+   "English"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "mixed",
+  "hof": "PHI",
+  "hof_fallback": null
+ },
+ "MYS": {
+  "name": "Malaysia",
+  "capital": "Kuala Lumpur",
+  "lat": 3.14,
+  "lon": 101.69,
+  "utc": 8.0,
+  "lang": [
+   "Malay"
+  ],
+  "lang2": [
+   "English",
+   "Mandarin"
+  ],
+  "religion": "Muslim",
+  "legal": "common",
+  "hof": "MAL",
+  "hof_fallback": null
+ },
+ "AUS": {
+  "name": "Australia",
+  "capital": "Canberra",
+  "lat": -35.28,
+  "lon": 149.13,
+  "utc": 10.0,
+  "lang": [
+   "English"
+  ],
+  "lang2": [],
+  "religion": "Christian",
+  "legal": "common",
+  "hof": "AUL",
+  "hof_fallback": null
+ },
+ "NZL": {
+  "name": "New Zealand",
+  "capital": "Wellington",
+  "lat": -41.29,
+  "lon": 174.78,
+  "utc": 12.0,
+  "lang": [
+   "English",
+   "Māori"
+  ],
+  "lang2": [],
+  "religion": "Unaffiliated",
+  "legal": "common",
+  "hof": "NZL",
+  "hof_fallback": null
+ }
+}

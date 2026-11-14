@@ -1,0 +1,77 @@
+{
+ "hofstede": {
+  "dim": "C",
+  "label": "Hofstede, Hofstede & Minkov, 6-D cultural dimensions dataset (2015 release; values per Cultures and Organizations, 3rd ed., 2010)",
+  "url": "https://geerthofstede.com/research-and-vsm/dimension-data-matrix/"
+ },
+ "factbook_lang": {
+  "dim": "C",
+  "label": "CIA World Factbook: Languages field (country profiles)",
+  "url": "https://www.cia.gov/the-world-factbook/field/languages/"
+ },
+ "pew_religion": {
+  "dim": "C",
+  "label": "Pew Research Center, How the Global Religious Landscape Changed From 2010 to 2020 (June 2025)",
+  "url": "https://www.pewresearch.org/religion/2025/06/09/how-the-global-religious-landscape-changed-from-2010-to-2020/"
+ },
+ "ustr_fta": {
+  "dim": "A",
+  "label": "USTR: U.S. Free Trade Agreements in force",
+  "url": "https://ustr.gov/trade-agreements/free-trade-agreements"
+ },
+ "wto_rta": {
+  "dim": "A",
+  "label": "WTO Regional Trade Agreements Information System (agreements in force)",
+  "url": "https://rtais.wto.org/"
+ },
+ "ofac": {
+  "dim": "A",
+  "label": "U.S. Treasury OFAC: Sanctions Programs and Country Information",
+  "url": "https://ofac.treasury.gov/sanctions-programs-and-country-information"
+ },
+ "wgi": {
+  "dim": "A",
+  "label": "World Bank, Worldwide Governance Indicators: Control of Corruption, Regulatory Quality, Voice & Accountability (via WDI CC.EST, RQ.EST, VA.EST)",
+  "url": "https://www.worldbank.org/en/publication/worldwide-governance-indicators"
+ },
+ "juriglobe": {
+  "dim": "A",
+  "label": "JuriGlobe World Legal Systems, University of Ottawa (legal-family classification)",
+  "url": "http://www.juriglobe.ca/eng/"
+ },
+ "capitals": {
+  "dim": "G",
+  "label": "Great-circle distance computed from capital-city coordinates (CIA World Factbook: Capital field)",
+  "url": "https://www.cia.gov/the-world-factbook/field/capital/"
+ },
+ "lpi": {
+  "dim": "G",
+  "label": "World Bank Logistics Performance Index 2023 (WDI LP.LPI.OVRL.XQ)",
+  "url": "https://lpi.worldbank.org/international/global"
+ },
+ "itu": {
+  "dim": "G",
+  "label": "ITU via World Bank WDI: Individuals using the Internet, % of population (IT.NET.USER.ZS)",
+  "url": "https://data.worldbank.org/indicator/IT.NET.USER.ZS"
+ },
+ "wdi_gdppc": {
+  "dim": "E",
+  "label": "World Bank WDI: GDP per capita, current US$ (NY.GDP.PCAP.CD)",
+  "url": "https://data.worldbank.org/indicator/NY.GDP.PCAP.CD"
+ },
+ "wdi_gdp": {
+  "dim": "E",
+  "label": "World Bank WDI: GDP, current US$ (NY.GDP.MKTP.CD)",
+  "url": "https://data.worldbank.org/indicator/NY.GDP.MKTP.CD"
+ },
+ "ghemawat": {
+  "dim": "-",
+  "label": "Ghemawat, P. (2001). Distance Still Matters: The Hard Reality of Global Expansion. Harvard Business Review 79(8).",
+  "url": "https://hbr.org/2001/09/distance-still-matters-the-hard-reality-of-global-expansion"
+ },
+ "kogut_singh": {
+  "dim": "-",
+  "label": "Kogut, B. & Singh, H. (1988). The Effect of National Culture on the Choice of Entry Mode. JIBS 19(3).",
+  "url": "https://doi.org/10.1057/palgrave.jibs.8490394"
+ }
+}
